@@ -1,0 +1,25 @@
+spring:
+  config:
+    import: optional:file:.env
+  datasource:
+    url: jdbc:mysql://database-bon-voyage.ce11t7dppo5g.ap-northeast-2.rds.amazonaws.com:3306/database-bon-voyage
+    hikari:
+      validation-timeout: '2000'
+      username: ${database_name}
+      password: ${database_password}
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      connection-timeout: '5000'
+      pool-name: hikariCP
+      idle-timeout: '60000'
+      maximum-pool-size: '50'
+      max-lifetime: '1800000'
+      auto-commit: 'true'
+      minimum-idle: '10'
+      connection-init-sql: select 1
+
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: update
