@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Table;
 import java.time.LocalDateTime;
 
@@ -14,6 +15,7 @@ import java.time.LocalDateTime;
 @Table(name = "attraction_detail")
 public class AttractionDetailEntity {
 
+    @Id
     private int contentId;
     private String cat1;
     private String cat2;
