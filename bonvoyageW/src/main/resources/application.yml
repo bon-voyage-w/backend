@@ -1,12 +1,12 @@
 spring:
-  config:
-    import: optional:file:.env
+#  config:
+#    import: optional:file:.env
   datasource:
-    url: jdbc:mysql://database-bon-voyage.ce11t7dppo5g.ap-northeast-2.rds.amazonaws.com:3306/database-bon-voyage
+    url: jdbc:mysql://localhost:3306/ssafytrip?serverTimezone=UTC
     hikari:
       validation-timeout: '2000'
-      username: ${database_name}
-      password: ${database_password}
+      username: ssafy
+      password: ssafy
       driver-class-name: com.mysql.cj.jdbc.Driver
       connection-timeout: '5000'
       pool-name: hikariCP
@@ -23,3 +23,9 @@ spring:
         dialect: org.hibernate.dialect.H2Dialect
     hibernate:
       ddl-auto: update
+
+# 230503 JSP 추가
+  mvc:
+    view:
+      prefix: /WEB-INF/views/
+      suffix: .jsp
