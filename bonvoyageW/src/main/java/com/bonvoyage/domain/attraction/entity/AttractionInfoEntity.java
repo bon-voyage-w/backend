@@ -13,7 +13,7 @@ import javax.persistence.Table;
 public class AttractionInfoEntity {
 
     @Id
-    private int contentId;
+    private long contentId;
 
     private int contentTypeId;
     private String title;

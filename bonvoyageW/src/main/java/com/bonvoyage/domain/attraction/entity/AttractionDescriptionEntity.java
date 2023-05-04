@@ -16,13 +16,13 @@ import javax.persistence.Table;
 public class AttractionDescriptionEntity {
 
     @Id
-    private int contentId;
+    private long contentId;
     private String homepage;
     private String overview;
     private String telname;
 
     @Builder
-    public AttractionDescriptionEntity(int contentId, String homepage, String overview, String telname) {
+    public AttractionDescriptionEntity(long contentId, String homepage, String overview, String telname) {
         this.contentId = contentId;
         this.homepage = homepage;
         this.overview = overview;
