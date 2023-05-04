@@ -1,13 +1,12 @@
 spring:
-#  config:
-#    import: optional:file:.env
+  config:
+    import: optional:file:.env[.properties]
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/ssafytrip?serverTimezone=UTC
-    username: ssafy
-    password: ssafy
+    url: ${DATA_SOURCE}
+    username: ${DB_NAME}
+    password: ${DB_PASS}
     hikari:
-
       validation-timeout: '2000'
       driver-class-name: com.mysql.cj.jdbc.Driver
       connection-timeout: '5000'
