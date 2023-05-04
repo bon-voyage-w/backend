@@ -1,9 +1,8 @@
-package com.bonvoyage.attraction.service;
+package com.bonvoyage.domain.attraction.service;
 
-import com.bonvoyage.attraction.dto.AttractionInfoDto;
-import com.bonvoyage.attraction.entity.AttractionInfoEntity;
-import com.bonvoyage.attraction.repository.AttractionInfoRepository;
-import lombok.RequiredArgsConstructor;
+import com.bonvoyage.domain.attraction.dto.AttractionInfoDto;
+import com.bonvoyage.domain.attraction.entity.AttractionInfoEntity;
+import com.bonvoyage.domain.attraction.repository.AttractionInfoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +23,6 @@ public class AttractionServiceImpl implements AttractionService {
     @Override
     public List<AttractionInfoDto> getAttractionList() {
        List<AttractionInfoEntity> entityList = attractionInfoRepository.findAll();
-        System.out.println(entityList);
        List<AttractionInfoDto> result = new ArrayList<>();
 
        entityList.forEach(entity -> {

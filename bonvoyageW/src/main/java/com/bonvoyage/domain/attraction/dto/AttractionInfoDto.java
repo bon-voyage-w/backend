@@ -1,6 +1,5 @@
-package com.bonvoyage.attraction.dto;
+package com.bonvoyage.domain.attraction.dto;
 
-import com.bonvoyage.attraction.entity.AttractionInfoEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

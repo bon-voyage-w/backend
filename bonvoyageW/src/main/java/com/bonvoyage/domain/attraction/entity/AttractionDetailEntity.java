@@ -1,4 +1,4 @@
-package com.bonvoyage.attraction.entity;
+package com.bonvoyage.domain.attraction.entity;
 
 import lombok.AccessLevel;
 import lombok.Getter;

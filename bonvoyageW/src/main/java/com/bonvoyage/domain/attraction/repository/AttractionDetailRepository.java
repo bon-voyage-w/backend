@@ -1,6 +1,6 @@
-package com.bonvoyage.attraction.repository;
+package com.bonvoyage.domain.attraction.repository;
 
-import com.bonvoyage.attraction.entity.AttractionDetailEntity;
+import com.bonvoyage.domain.attraction.entity.AttractionDetailEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
