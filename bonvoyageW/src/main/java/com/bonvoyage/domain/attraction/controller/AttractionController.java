@@ -16,13 +16,11 @@ public class AttractionController {
 
     private final AttractionService attractionService;
 
-    @GetMapping("/attractionList")
+    @GetMapping("/")
     public List<AttractionInfoDto> list() {
-//        List<AttractionInfoEntity> attractions = attractionService.getAttractionList();
-//        model.addAttribute("attractions", attractions);
-
-
         return attractionService.getAttractionList();
     }
+
+
 
 }

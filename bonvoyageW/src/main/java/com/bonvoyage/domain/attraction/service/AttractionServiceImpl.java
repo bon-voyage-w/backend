@@ -25,21 +25,22 @@ public class AttractionServiceImpl implements AttractionService {
        List<AttractionInfoEntity> entityList = attractionInfoRepository.findAll();
        List<AttractionInfoDto> result = new ArrayList<>();
 
-       entityList.forEach(entity -> {
-            AttractionInfoDto dto = new AttractionInfoDto();
-            dto.setContentId(entity.getContentId());
-            dto.setTitle(entity.getTitle());
-            dto.setAddr1(entity.getAddr1());
-            dto.setTel(entity.getTel());
-            dto.setFirstImage(entity.getFirstImage());
-            dto.setSidoCode(entity.getSidoCode());
-            dto.setGugunCode(entity.getGugunCode());
-            dto.setLatitude(entity.getLatitude());
-            dto.setLongitude(entity.getLongitude());
-           result.add(dto);
-       });
+        for (AttractionInfoEntity attractionInfoEntity : entityList) {
+            AttractionInfoDto attractionInfoDto = AttractionInfoDto.builder()
+                    .contentId(attractionInfoEntity.getContentId())
+                    .title(attractionInfoEntity.getTitle())
+                    .addr1(attractionInfoEntity.getAddr1())
+                    .tel(attractionInfoEntity.getTel())
+                    .firstImage(attractionInfoEntity.getFirstImage())
+                    .sidoCode(attractionInfoEntity.getSidoCode())
+                    .gugunCode(attractionInfoEntity.getGugunCode())
+                    .latitude(attractionInfoEntity.getLatitude())
+                    .longitude(attractionInfoEntity.getLongitude())
+                    .build();
 
-       return result;
+            result.add(attractionInfoDto);
+        }
 
+        return result;
     }
 }

@@ -1,5 +1,6 @@
 package com.bonvoyage.domain.attraction.dto;
 
+import com.bonvoyage.domain.attraction.entity.AttractionInfoEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -21,18 +22,5 @@ public class AttractionInfoDto {
     private double latitude;
     private double longitude;
 
-//    public static AttractionInfoDto toDto(AttractionInfoEntity attractionInfoEntity) {
-//        return AttractionInfoDto.builder()
-//                .contentId(attractionInfoEntity.getContentId())
-//                .title(attractionInfoEntity.getTitle())
-//                .addr1(attractionInfoEntity.getAddr1())
-//                .tel(attractionInfoEntity.getTel())
-//                .firstImage(attractionInfoEntity.getFirstImage())
-//                .sidoCode(attractionInfoEntity.getSidoCode())
-//                .gugunCode(attractionInfoEntity.getGugunCode())
-//                .latitude(attractionInfoEntity.getLatitude())
-//                .longitude(attractionInfoEntity.getLongitude())
-//                .build();
-//    }
 
 }

@@ -8,4 +8,5 @@ public interface AttractionService {
 
     List<AttractionInfoDto> getAttractionList();
 
+
 }
