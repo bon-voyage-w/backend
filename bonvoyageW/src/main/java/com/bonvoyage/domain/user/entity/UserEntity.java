@@ -1,39 +1,38 @@
-package com.bonvoyage.user.entity;
+package com.bonvoyage.domain.user.entity;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Date;
 
-@Getter
+
 @Entity
+@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name="users")
 public class UserEntity {
     @Id
-    private int userId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    private int loginId;
+    private String loginId;
     private String pw;
     private String email;
     private String name;
     private Date birth;
     private String phone;
-    private boolean authorization;
+    private boolean auth;
     private boolean avail;
 
     @Builder
-    public UserEntity(int userId, int loginId, String pw, String email, String name, Date birth, String phone, boolean authorization, boolean avail) {
-        this.userId = userId;
+    public UserEntity(String loginId, String pw, String email, String name, Date birth, String phone, boolean authorization, boolean avail) {
         this.loginId = loginId;
         this.pw = pw;
         this.email = email;
         this.name = name;
         this.birth = birth;
         this.phone = phone;
-        this.authorization = authorization;
+        this.auth = authorization;
         this.avail = avail;
     }
 }
