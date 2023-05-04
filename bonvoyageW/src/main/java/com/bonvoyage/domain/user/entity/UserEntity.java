@@ -13,7 +13,7 @@ import java.util.Date;
 public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long userId;
 
     private String loginId;
     private String pw;

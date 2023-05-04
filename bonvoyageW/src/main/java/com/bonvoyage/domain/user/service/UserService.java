@@ -14,13 +14,13 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserService {
 
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
     public List<UserDto> listMember(Object o) {
         List<UserEntity> userEntities=userRepository.findAll();
         List<UserDto> userDtos= new ArrayList<>();
         for (UserEntity user: userEntities) {
             UserDto userDto =UserDto.builder()
-                    .userId(user.getId())
+                    .userId(user.getUserId())
                     .name(user.getName())
                     .phone(user.getPhone())
                     .build();
