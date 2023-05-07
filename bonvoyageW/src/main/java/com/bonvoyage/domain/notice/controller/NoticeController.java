@@ -15,18 +15,18 @@ public class NoticeController {
 
     private final NoticeService noticeService;
 
-    @GetMapping("/")
-    public String noticeList() {
+    @GetMapping("")
+    public String getNoticeList() {
         return "";
     }
 
-    @PostMapping("/")
+    @PostMapping("")
     public String registerNotice(){
         return "";
     }
 
     @GetMapping("/{noticeId}")
-    public String findNotice(){
+    public String findNoticeDetails(){
         return "";
     }
 
@@ -39,6 +39,5 @@ public class NoticeController {
     public String deleteNotice() {
         return "";
     }
-
 
 }
