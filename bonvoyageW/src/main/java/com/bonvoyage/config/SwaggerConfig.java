@@ -1,4 +1,4 @@
-package com.bonvoyage;
+package com.bonvoyage.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
