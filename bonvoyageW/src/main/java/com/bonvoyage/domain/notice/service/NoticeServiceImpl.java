@@ -43,12 +43,8 @@ public class NoticeServiceImpl implements NoticeService {
     }
 
     @Override
-    public void modifyNotice(Long noticeId, NoticeDto noticeDto) {
-//        update : title, content
-        NoticeEntity noticeEntity = noticeRepository.findById(noticeId)
-                        .orElseThrow(NegativeArraySizeException::new);
-
-        noticeRepository.save(dtoToEntity(noticeDto));
+    public Long modifyNotice(Long noticeId, NoticeDto noticeDto) {
+        return noticeRepository.save(dtoToEntity(noticeDto)).getNoticeId();
     }
 
     @Override
