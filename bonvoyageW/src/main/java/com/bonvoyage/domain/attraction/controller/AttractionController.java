@@ -17,15 +17,14 @@ public class AttractionController {
 
     private final AttractionService attractionService;
 
-    @GetMapping("/")
+    @GetMapping("")
     public List<AttractionInfoDto> list() {
         return attractionService.getAttractionList();
     }
 
     @GetMapping("/{contentId}")
     public AttractionInfoDto view(@PathVariable("contentId") int contentId) {
-        System.out.println("@@@@@@@@@@@ c " + contentId);
-        return attractionService.view((long)contentId);
+        return attractionService.findByContentId((long)contentId);
     }
 
 }

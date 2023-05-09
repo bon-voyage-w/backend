@@ -7,6 +7,6 @@ import java.util.List;
 public interface AttractionService {
 
     List<AttractionInfoDto> getAttractionList();
-    AttractionInfoDto view(long contentId);
+    AttractionInfoDto findByContentId(long contentId);
 
 }
