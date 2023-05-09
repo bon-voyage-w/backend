@@ -16,7 +16,7 @@ public class NoticeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long noticeId;
+    private Long noticeId;
 
     private String title;
     private Date date;
@@ -25,7 +25,7 @@ public class NoticeEntity {
     private int userId;
 
     @Builder
-    public NoticeEntity(long noticeId, String title, Date date, String content, int hit, int userId) {
+    public NoticeEntity(Long noticeId, String title, Date date, String content, int hit, int userId) {
         this.noticeId = noticeId;
         this.title = title;
         this.date = date;

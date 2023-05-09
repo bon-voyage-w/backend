@@ -13,7 +13,7 @@ import java.util.Date;
 @AllArgsConstructor
 public class NoticeDto {
 
-    private long noticeId;
+    private Long noticeId;
     private String title;
     private Date date;
     private String content;

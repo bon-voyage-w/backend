@@ -26,17 +26,17 @@ public class NoticeController {
     }
 
     @GetMapping("/{noticeId}")
-    public String findNoticeDetails(){
+    public String findByNoticeId(@PathVariable("noticeId") Long noticeId){
         return "";
     }
 
     @PutMapping("/{noticeId}")
-    public String modifyNotice(){
+    public String modifyNotice(@PathVariable("noticeId") Long noticeId){
         return "";
     }
 
     @DeleteMapping("/{noticeId}")
-    public String deleteNotice() {
+    public String deleteNotice(@PathVariable("noticeId") Long noticeId) {
         return "";
     }
 

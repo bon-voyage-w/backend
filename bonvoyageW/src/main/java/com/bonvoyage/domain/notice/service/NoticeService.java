@@ -7,8 +7,8 @@ import java.util.List;
 public interface NoticeService {
 
     List<NoticeDto> getNoticeList();
-    NoticeDto findByNoticeId(long noticeId);
+    NoticeDto findByNoticeId(Long noticeId);
     void addNotice(NoticeDto noticeDto);
-    void modifyNotice(NoticeDto noticeDto);
-    void removeNotice(long noticeId);
+    void modifyNotice(Long noticeId, NoticeDto noticeDto);
+    void removeNotice(Long noticeId);
 }
