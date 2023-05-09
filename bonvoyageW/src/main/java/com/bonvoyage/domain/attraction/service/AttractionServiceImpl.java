@@ -21,18 +21,8 @@ public class AttractionServiceImpl implements AttractionService {
        List<AttractionInfoDto> result = new ArrayList<>();
 
         for (AttractionInfoEntity attractionInfoEntity : entityList) {
-            AttractionInfoDto attractionInfoDto = AttractionInfoDto.builder()
-                    .contentId(attractionInfoEntity.getContentId())
-                    .title(attractionInfoEntity.getTitle())
-                    .addr1(attractionInfoEntity.getAddr1())
-                    .tel(attractionInfoEntity.getTel())
-                    .firstImage(attractionInfoEntity.getFirstImage())
-                    .sidoCode(attractionInfoEntity.getSidoCode())
-                    .gugunCode(attractionInfoEntity.getGugunCode())
-                    .latitude(attractionInfoEntity.getLatitude())
-                    .longitude(attractionInfoEntity.getLongitude())
-                    .build();
 
+            AttractionInfoDto attractionInfoDto = entityToDto(attractionInfoEntity);
             result.add(attractionInfoDto);
         }
 
@@ -40,13 +30,16 @@ public class AttractionServiceImpl implements AttractionService {
     }
 
     @Override
-    public AttractionInfoDto view(long contentId) {
+    public AttractionInfoDto findByContentId(long contentId) {
 
         AttractionInfoEntity attractionInfoEntity = attractionInfoRepository.findById(contentId)
                 .orElseThrow(NullPointerException::new);
 
-        System.out.println("@@@@@@@@@@@ s " + contentId);
+        AttractionInfoDto attractionInfoDto = entityToDto(attractionInfoEntity);
+        return attractionInfoDto;
+    }
 
+    public AttractionInfoDto entityToDto(AttractionInfoEntity attractionInfoEntity) {
         AttractionInfoDto attractionInfoDto = AttractionInfoDto.builder()
                 .contentId(attractionInfoEntity.getContentId())
                 .title(attractionInfoEntity.getTitle())
@@ -61,4 +54,5 @@ public class AttractionServiceImpl implements AttractionService {
 
         return attractionInfoDto;
     }
+
 }
