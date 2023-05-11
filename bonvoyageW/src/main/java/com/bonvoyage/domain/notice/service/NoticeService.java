@@ -9,6 +9,6 @@ public interface NoticeService {
     List<NoticeDto> getNoticeList();
     NoticeDto findByNoticeId(Long noticeId);
     void addNotice(NoticeDto noticeDto);
-    Long modifyNotice(Long noticeId, NoticeDto noticeDto);
+    void modifyNotice(Long noticeId, NoticeDto noticeDto);
     void removeNotice(Long noticeId);
 }

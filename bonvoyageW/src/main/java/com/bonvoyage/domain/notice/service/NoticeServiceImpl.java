@@ -5,6 +5,7 @@ import com.bonvoyage.domain.notice.entity.NoticeEntity;
 import com.bonvoyage.domain.notice.repository.NoticeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,16 +39,22 @@ public class NoticeServiceImpl implements NoticeService {
     }
 
     @Override
+    @Transactional
     public void addNotice(NoticeDto noticeDto) {
        noticeRepository.save(dtoToEntity(noticeDto));
     }
 
     @Override
-    public Long modifyNotice(Long noticeId, NoticeDto noticeDto) {
-        return noticeRepository.save(dtoToEntity(noticeDto)).getNoticeId();
+    @Transactional
+    public void modifyNotice(Long noticeId, NoticeDto noticeDto) {
+        NoticeEntity noticeEntity = noticeRepository.findById(noticeId)
+                .orElseThrow(NullPointerException::new);
+        noticeEntity.update(noticeDto.getTitle(), noticeDto.getContent());
+//        return noticeRepository.save(dtoToEntity(noticeDto)).getNoticeId();
     }
 
     @Override
+    @Transactional
     public void removeNotice(Long noticeId) {
         noticeRepository.deleteById(noticeId);
     }

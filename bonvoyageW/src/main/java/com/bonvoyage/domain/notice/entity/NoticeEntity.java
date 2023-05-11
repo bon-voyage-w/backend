@@ -33,4 +33,9 @@ public class NoticeEntity {
         this.hit = hit;
         this.userId = userId;
     }
+
+    public void update(String title, String content) {
+        this.title = title;
+        this.content = content;
+    }
 }
