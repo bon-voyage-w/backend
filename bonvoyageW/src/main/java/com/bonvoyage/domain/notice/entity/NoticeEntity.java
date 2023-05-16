@@ -11,7 +11,7 @@ import java.util.Date;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name = "notice")
+@Table(name = "notices")
 public class NoticeEntity {
 
     @Id
