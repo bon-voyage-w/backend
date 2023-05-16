@@ -39,6 +39,19 @@ public class AttractionServiceImpl implements AttractionService {
         return attractionInfoDto;
     }
 
+    @Override
+    public List<AttractionInfoDto> findByTitle(String title) {
+        List<AttractionInfoEntity> entityList = attractionInfoRepository.findByTitleContaining(title);
+        List<AttractionInfoDto> result = new ArrayList<>();
+
+        for(AttractionInfoEntity attractionInfoEntity : entityList) {
+            AttractionInfoDto attractionInfoDto = entityToDto(attractionInfoEntity);
+            result.add(attractionInfoDto);
+        }
+
+        return result;
+    }
+
     public AttractionInfoDto entityToDto(AttractionInfoEntity attractionInfoEntity) {
         AttractionInfoDto attractionInfoDto = AttractionInfoDto.builder()
                 .contentId(attractionInfoEntity.getContentId())

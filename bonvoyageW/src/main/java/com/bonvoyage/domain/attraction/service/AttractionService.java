@@ -8,5 +8,6 @@ public interface AttractionService {
 
     List<AttractionInfoDto> getAttractionList();
     AttractionInfoDto findByContentId(long contentId);
+    List<AttractionInfoDto> findByTitle(String title);
 
 }
