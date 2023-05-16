@@ -34,6 +34,7 @@ public class NoticeEntity {
         this.userId = userId;
     }
 
+    /* 게시글 수정 */
     public void update(String title, String content) {
         this.title = title;
         this.content = content;
