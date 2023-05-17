@@ -17,12 +17,12 @@ public class AttractionController {
     private final AttractionService attractionService;
 
     @GetMapping("")
-    public ResponseEntity<List<AttractionInfoDto>> list() {
+    public ResponseEntity<List<AttractionInfoDto>> getAttractionList() {
         return ResponseEntity.status(HttpStatus.OK).body(attractionService.getAttractionList());
     }
 
     @GetMapping("/{contentId}")
-    public ResponseEntity<AttractionInfoDto> view(@PathVariable("contentId") long contentId) {
+    public ResponseEntity<AttractionInfoDto> findByContentId(@PathVariable("contentId") long contentId) {
         return ResponseEntity.status(HttpStatus.OK).body(attractionService.findByContentId(contentId));
     }
 
