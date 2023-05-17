@@ -16,22 +16,22 @@ public class ReviewEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long reviewId;
+    private Long reviewId;
 
     private String reviewContent;
     private Date writeDate;
     private String location;
     private int userId;
-    private int contentId2;
+    private int contentId;
 
     @Builder
 
-    public ReviewEntity(long reviewId, String reviewContent, Date writeDate, String location, int userId, int contentId2) {
+    public ReviewEntity(Long reviewId, String reviewContent, Date writeDate, String location, int userId, int contentId) {
         this.reviewId = reviewId;
         this.reviewContent = reviewContent;
         this.writeDate = writeDate;
         this.location = location;
         this.userId = userId;
-        this.contentId2 = contentId2;
+        this.contentId = contentId;
     }
 }
