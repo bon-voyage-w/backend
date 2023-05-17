@@ -12,6 +12,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class NoticeServiceImpl implements NoticeService {
 
     private final NoticeRepository noticeRepository;
@@ -39,13 +40,11 @@ public class NoticeServiceImpl implements NoticeService {
     }
 
     @Override
-    @Transactional
     public void addNotice(NoticeDto noticeDto) {
        noticeRepository.save(dtoToEntity(noticeDto));
     }
 
     @Override
-    @Transactional
     public void modifyNotice(Long noticeId, NoticeDto noticeDto) {
         NoticeEntity noticeEntity = noticeRepository.findById(noticeId)
                 .orElseThrow(NullPointerException::new);
@@ -54,7 +53,6 @@ public class NoticeServiceImpl implements NoticeService {
     }
 
     @Override
-    @Transactional
     public void removeNotice(Long noticeId) {
         noticeRepository.deleteById(noticeId);
     }
