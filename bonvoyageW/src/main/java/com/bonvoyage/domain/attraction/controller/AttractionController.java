@@ -3,6 +3,8 @@ package com.bonvoyage.domain.attraction.controller;
 import com.bonvoyage.domain.attraction.dto.AttractionInfoDto;
 import com.bonvoyage.domain.attraction.service.AttractionService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,18 +17,18 @@ public class AttractionController {
     private final AttractionService attractionService;
 
     @GetMapping("")
-    public List<AttractionInfoDto> list() {
-        return attractionService.getAttractionList();
+    public ResponseEntity<List<AttractionInfoDto>> list() {
+        return ResponseEntity.status(HttpStatus.OK).body(attractionService.getAttractionList());
     }
 
     @GetMapping("/{contentId}")
-    public AttractionInfoDto view(@PathVariable("contentId") long contentId) {
-        return attractionService.findByContentId(contentId);
+    public ResponseEntity<AttractionInfoDto> view(@PathVariable("contentId") long contentId) {
+        return ResponseEntity.status(HttpStatus.OK).body(attractionService.findByContentId(contentId));
     }
 
     @GetMapping("/search")
-    public List<AttractionInfoDto> findByTitle(@RequestParam String title) {
-        return attractionService.findByTitle(title);
+    public ResponseEntity<List<AttractionInfoDto>> findByTitle(@RequestParam String title) {
+        return ResponseEntity.status(HttpStatus.OK).body(attractionService.findByTitle(title));
     }
 
 }

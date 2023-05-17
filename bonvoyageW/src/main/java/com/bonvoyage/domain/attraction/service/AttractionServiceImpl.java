@@ -31,7 +31,6 @@ public class AttractionServiceImpl implements AttractionService {
 
     @Override
     public AttractionInfoDto findByContentId(long contentId) {
-
         AttractionInfoEntity attractionInfoEntity = attractionInfoRepository.findById(contentId)
                 .orElseThrow(NullPointerException::new);
 
