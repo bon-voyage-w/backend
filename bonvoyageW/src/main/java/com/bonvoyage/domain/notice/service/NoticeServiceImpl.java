@@ -40,45 +40,23 @@ public class NoticeServiceImpl implements NoticeService {
     }
 
     @Override
-    public void addNotice(NoticeDto noticeDto) {
-       noticeRepository.save(dtoToEntity(noticeDto));
+    public Long addNotice(NoticeDto noticeDto) {
+        noticeRepository.save(dtoToEntity(noticeDto));
+        return noticeDto.getNoticeId();
     }
 
     @Override
-    public void modifyNotice(Long noticeId, NoticeDto noticeDto) {
+    public Long modifyNotice(Long noticeId, NoticeDto noticeDto) {
         NoticeEntity noticeEntity = noticeRepository.findById(noticeId)
                 .orElseThrow(NullPointerException::new);
         noticeEntity.update(noticeDto.getTitle(), noticeDto.getContent());
-//        return noticeRepository.save(dtoToEntity(noticeDto)).getNoticeId();
+        return noticeId;
     }
 
     @Override
-    public void removeNotice(Long noticeId) {
+    public Long removeNotice(Long noticeId) {
         noticeRepository.deleteById(noticeId);
-    }
-
-    public NoticeDto entityToDto(NoticeEntity noticeEntity) {
-        NoticeDto noticeDto = NoticeDto.builder()
-                .noticeId(noticeEntity.getNoticeId())
-                .title(noticeEntity.getTitle())
-                .date(noticeEntity.getDate())
-                .content(noticeEntity.getContent())
-                .hit(noticeEntity.getHit())
-                .userId(noticeEntity.getUserId())
-                .build();
-        return noticeDto;
-    }
-
-    public NoticeEntity dtoToEntity(NoticeDto noticeDto) {
-        NoticeEntity noticeEntity = NoticeEntity.builder()
-                .noticeId(noticeDto.getNoticeId())
-                .title(noticeDto.getTitle())
-                .date(noticeDto.getDate())
-                .content(noticeDto.getContent())
-                .hit(noticeDto.getHit())
-                .userId(noticeDto.getUserId())
-                .build();
-        return noticeEntity;
+        return noticeId;
     }
 
 }

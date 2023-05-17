@@ -23,25 +23,23 @@ public class NoticeController {
     }
 
     @PostMapping("")
-    public ResponseEntity<?> registerNotice(@RequestBody NoticeDto noticeDto){
+    public ResponseEntity<Long> registerNotice(@RequestBody NoticeDto noticeDto){
         return ResponseEntity.status(HttpStatus.OK).body(noticeService.addNotice(noticeDto));
     }
 
     @GetMapping("/{noticeId}")
-    public NoticeDto findByNoticeId(@PathVariable("noticeId") Long noticeId){
-        return noticeService.findByNoticeId(noticeId);
+    public ResponseEntity<NoticeDto> findByNoticeId(@PathVariable("noticeId") Long noticeId){
+        return ResponseEntity.status(HttpStatus.OK).body(noticeService.findByNoticeId(noticeId));
     }
 
     @PutMapping("/{noticeId}")
-    public String modifyNotice(@PathVariable("noticeId") Long noticeId, @RequestBody NoticeDto noticeDto){
-        noticeService.modifyNotice(noticeId, noticeDto);
-        return "";
+    public ResponseEntity<Long> modifyNotice(@PathVariable("noticeId") Long noticeId, @RequestBody NoticeDto noticeDto){
+        return ResponseEntity.status(HttpStatus.OK).body(noticeService.modifyNotice(noticeId, noticeDto));
     }
 
     @DeleteMapping("/{noticeId}")
-    public String deleteNotice(@PathVariable("noticeId") Long noticeId) {
-        noticeService.removeNotice(noticeId);
-        return "";
+    public ResponseEntity<Long> deleteNotice(@PathVariable("noticeId") Long noticeId) {
+        return ResponseEntity.status(HttpStatus.OK).body(noticeService.removeNotice(noticeId));
     }
 
 }
