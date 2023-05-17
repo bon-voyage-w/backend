@@ -3,6 +3,8 @@ package com.bonvoyage.domain.review.controller;
 import com.bonvoyage.domain.review.dto.ReviewDto;
 import com.bonvoyage.domain.review.service.ReviewService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,26 +17,24 @@ public class ReviewController {
     private final ReviewService reviewService;
 
     @GetMapping("")
-    public List<ReviewDto> getReviews(@RequestParam(defaultValue = "0", required = false) Long contentId) {
-        return reviewService.getReviewList(contentId);
+    public ResponseEntity<List<ReviewDto>> getReviews(@RequestParam(defaultValue = "0", required = false) Long contentId) {
+        return ResponseEntity.status(HttpStatus.OK).body(reviewService.getReviewList(contentId));
     }
 
     @PostMapping("")
-    public String registerReview(@RequestBody ReviewDto reviewDto){
-        reviewService.addReview(reviewDto);
-        return "success";
+    public ResponseEntity<Long> egisterReview(@RequestBody ReviewDto reviewDto){
+        return ResponseEntity.status(HttpStatus.OK).body(reviewService.addReview(reviewDto));
     }
 
     @PutMapping("/{reviewId}")
-    public String modifyNotice(@PathVariable("reviewId") Long reviewId, @RequestBody ReviewDto reviewDto){
-        reviewService.modifyReview(reviewId, reviewDto);
-        return "success";
+    public ResponseEntity<Long> modifyNotice(@PathVariable("reviewId") Long reviewId, @RequestBody ReviewDto reviewDto){
+        return ResponseEntity.status(HttpStatus.OK).body(reviewService.modifyReview(reviewId, reviewDto));
     }
 
     @DeleteMapping("/{reviewId}")
-    public Long deleteNotice(@PathVariable("reviewId") Long reviewId) {
-        reviewService.removeReview(reviewId);
-        return reviewId;
+    public ResponseEntity<Long> deleteNotice(@PathVariable("reviewId") Long reviewId) {
+        return ResponseEntity.status(HttpStatus.OK).body(reviewService.removeReview(reviewId));
+
     }
 
 }

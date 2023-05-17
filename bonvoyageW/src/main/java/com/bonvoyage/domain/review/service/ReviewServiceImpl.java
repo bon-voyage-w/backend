@@ -18,20 +18,23 @@ public class ReviewServiceImpl implements ReviewService {
     private final ReviewRepository reviewRepository;
 
     @Override
-    public void addReview(ReviewDto reviewDto) {
+    public Long addReview(ReviewDto reviewDto) {
         reviewRepository.save(dtoToEntity(reviewDto));
+        return reviewDto.getReviewId();
     }
 
     @Override
-    public void modifyReview(Long reviewId, ReviewDto reviewDto) {
+    public Long modifyReview(Long reviewId, ReviewDto reviewDto) {
         ReviewEntity reviewEntity = reviewRepository.findById(reviewId)
                 .orElseThrow(NullPointerException::new);
         reviewEntity.update(reviewDto.getReviewContent());
+        return reviewId;
     }
 
     @Override
-    public void removeReview(Long reviewId) {
+    public Long removeReview(Long reviewId) {
         reviewRepository.deleteById(reviewId);
+        return reviewId;
     }
 
     @Override
