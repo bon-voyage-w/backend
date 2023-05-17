@@ -2,13 +2,12 @@ package com.bonvoyage.domain.notice.controller;
 
 import com.bonvoyage.domain.notice.dto.NoticeDto;
 import com.bonvoyage.domain.notice.service.NoticeService;
-import lombok.Getter;
+import com.bonvoyage.domain.paging.dto.PageRequestDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/notices")
@@ -18,8 +17,8 @@ public class NoticeController {
     private final NoticeService noticeService;
 
     @GetMapping("")
-    public ResponseEntity<List<NoticeDto>> getNoticeList() {
-        return ResponseEntity.status(HttpStatus.OK).body(noticeService.getNoticeList());
+    public ResponseEntity<?> getNoticeList(PageRequestDto pageRequestDto) {
+        return ResponseEntity.status(HttpStatus.OK).body(noticeService.getNoticeList(pageRequestDto));
     }
 
     @PostMapping("")
