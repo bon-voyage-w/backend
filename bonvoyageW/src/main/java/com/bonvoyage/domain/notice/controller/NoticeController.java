@@ -4,6 +4,8 @@ import com.bonvoyage.domain.notice.dto.NoticeDto;
 import com.bonvoyage.domain.notice.service.NoticeService;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,14 +18,13 @@ public class NoticeController {
     private final NoticeService noticeService;
 
     @GetMapping("")
-    public List<NoticeDto> getNoticeList() {
-        return noticeService.getNoticeList();
+    public ResponseEntity<List<NoticeDto>> getNoticeList() {
+        return ResponseEntity.status(HttpStatus.OK).body(noticeService.getNoticeList());
     }
 
     @PostMapping("")
-    public String registerNotice(@RequestBody NoticeDto noticeDto){
-        noticeService.addNotice(noticeDto);
-        return "";
+    public ResponseEntity<?> registerNotice(@RequestBody NoticeDto noticeDto){
+        return ResponseEntity.status(HttpStatus.OK).body(noticeService.addNotice(noticeDto));
     }
 
     @GetMapping("/{noticeId}")
