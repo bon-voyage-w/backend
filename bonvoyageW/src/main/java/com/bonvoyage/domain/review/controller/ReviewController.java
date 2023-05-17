@@ -15,8 +15,8 @@ public class ReviewController {
     private final ReviewService reviewService;
 
     @GetMapping("")
-    public List<ReviewDto> getReviews() {
-        return reviewService.getReviewList();
+    public List<ReviewDto> getReviews(@RequestParam Long contentId) {
+        return reviewService.getReviewList(contentId);
     }
 
     @PostMapping("")

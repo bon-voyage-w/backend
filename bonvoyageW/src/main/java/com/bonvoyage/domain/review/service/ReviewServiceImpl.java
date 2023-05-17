@@ -35,9 +35,9 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public List<ReviewDto> getReviewList() {
+    public List<ReviewDto> getReviewList(Long contentId) {
         List<ReviewDto> result = new ArrayList<>();
-        List<ReviewEntity> entityList = reviewRepository.findAll();
+        List<ReviewEntity> entityList = reviewRepository.findByContentId(contentId);
         for(ReviewEntity reviewEntity : entityList) {
             ReviewDto reviewDto = entityToDto(reviewEntity);
             result.add(reviewDto);
