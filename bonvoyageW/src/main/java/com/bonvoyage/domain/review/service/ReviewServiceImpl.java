@@ -48,6 +48,7 @@ public class ReviewServiceImpl implements ReviewService {
     public ReviewDto entityToDto(ReviewEntity reviewEntity) {
         ReviewDto reviewDto = ReviewDto.builder()
                 .reviewId(reviewEntity.getReviewId())
+                .reviewContent(reviewEntity.getReviewContent())
                 .contentId(reviewEntity.getContentId())
                 .writeDate(reviewEntity.getWriteDate())
                 .location(reviewEntity.getLocation())

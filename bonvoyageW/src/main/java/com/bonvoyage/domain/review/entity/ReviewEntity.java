@@ -21,11 +21,11 @@ public class ReviewEntity {
     private String reviewContent;
     private Date writeDate;
     private String location;
-    private int userId;
-    private int contentId;
+    private Long userId;
+    private Long contentId;
 
     @Builder
-    public ReviewEntity(Long reviewId, String reviewContent, Date writeDate, String location, int userId, int contentId) {
+    public ReviewEntity(Long reviewId, String reviewContent, Date writeDate, String location, Long userId, Long contentId) {
         this.reviewId = reviewId;
         this.reviewContent = reviewContent;
         this.writeDate = writeDate;
