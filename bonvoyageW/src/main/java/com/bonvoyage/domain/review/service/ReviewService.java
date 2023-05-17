@@ -11,6 +11,4 @@ public interface ReviewService {
     void removeReview(Long reviewId);
 
     List<ReviewDto> getReviewList();
-    List<ReviewDto> findByContentId(Long contentId);
-    List<ReviewDto> findByUserId(Long userId);
 }

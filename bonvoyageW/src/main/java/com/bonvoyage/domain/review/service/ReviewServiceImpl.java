@@ -45,28 +45,6 @@ public class ReviewServiceImpl implements ReviewService {
         return result;
     }
 
-    @Override
-    public List<ReviewDto> findByContentId(Long contentId) {
-        List<ReviewDto> result = new ArrayList<>();
-        List<ReviewEntity> entityList = reviewRepository.findByContentId(contentId);
-        for(ReviewEntity reviewEntity : entityList) {
-            ReviewDto reviewDto = entityToDto(reviewEntity);
-            result.add(reviewDto);
-        }
-        return result;
-    }
-
-    @Override
-    public List<ReviewDto> findByUserId(Long userId) {
-        List<ReviewDto> result = new ArrayList<>();
-        List<ReviewEntity> entityList = reviewRepository.findByUserId(userId);
-        for(ReviewEntity reviewEntity : entityList) {
-            ReviewDto reviewDto = entityToDto(reviewEntity);
-            result.add(reviewDto);
-        }
-        return result;
-    }
-
     public ReviewDto entityToDto(ReviewEntity reviewEntity) {
         ReviewDto reviewDto = ReviewDto.builder()
                 .reviewId(reviewEntity.getReviewId())
