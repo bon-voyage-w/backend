@@ -25,7 +25,6 @@ public class ReviewEntity {
     private int contentId;
 
     @Builder
-
     public ReviewEntity(Long reviewId, String reviewContent, Date writeDate, String location, int userId, int contentId) {
         this.reviewId = reviewId;
         this.reviewContent = reviewContent;
@@ -33,5 +32,10 @@ public class ReviewEntity {
         this.location = location;
         this.userId = userId;
         this.contentId = contentId;
+    }
+
+    /* 리뷰 수정 */
+    public void update(String reviewContent) {
+        this.reviewContent = reviewContent;
     }
 }
