@@ -13,7 +13,7 @@ import java.util.Date;
 @AllArgsConstructor
 public class ReviewDto {
 
-    private long reviewId;
+    private Long reviewId;
     private String reviewContent;
     private Date writeDate;
     private String location;
