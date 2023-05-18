@@ -22,7 +22,7 @@ public class ReviewController {
     }
 
     @PostMapping("")
-    public ResponseEntity<Long> egisterReview(@RequestBody ReviewDto reviewDto){
+    public ResponseEntity<Long> registerReview(@RequestBody ReviewDto reviewDto){
         return ResponseEntity.status(HttpStatus.OK).body(reviewService.addReview(reviewDto));
     }
 
