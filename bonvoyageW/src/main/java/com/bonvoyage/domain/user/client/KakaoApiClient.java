@@ -12,6 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public interface KakaoApiClient {
 
     @PostMapping(value="/v2/user/me", consumes="application/json")
-    KakaoUserInfoDto requestKakaoUserInfo(@RequestHeader("Content-type") String contentType, @RequestHeader("Authorization") String AccessToken);
+    KakaoUserInfoDto requestKakaoUserInfo(@RequestHeader("Authorization") String AccessToken);
 
 }

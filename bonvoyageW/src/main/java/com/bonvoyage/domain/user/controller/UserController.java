@@ -31,6 +31,7 @@ public class UserController {
     }
     @PostMapping("")
     public ResponseEntity<?> userRegister(){
+
         return ResponseEntity.status(HttpStatus.OK).body(null);
     }
     @PutMapping
@@ -49,6 +50,7 @@ public class UserController {
 
     @PostMapping("/auth")
     public ResponseEntity<?> userLogin(){
+
         return ResponseEntity.status(HttpStatus.OK).body(null);
     }
 

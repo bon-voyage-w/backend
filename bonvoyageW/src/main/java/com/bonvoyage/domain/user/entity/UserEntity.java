@@ -20,19 +20,24 @@ public class UserEntity {
     private String email;
     private String name;
     private Date birth;
-    private String phone;
-    private boolean auth;
+    private boolean authorization;
     private boolean avail;
+    private String refreshtoken;
+    private String profileImg;
+    private String ageRange;
 
     @Builder
-    public UserEntity(String loginId, String pw, String email, String name, Date birth, String phone, boolean authorization, boolean avail) {
+    public UserEntity(Long userId, String loginId, String pw, String email, String name, Date birth, boolean authorization, boolean avail, String refreshtoken, String profileImg, String ageRange) {
+        this.userId = userId;
         this.loginId = loginId;
         this.pw = pw;
         this.email = email;
         this.name = name;
         this.birth = birth;
-        this.phone = phone;
-        this.auth = authorization;
+        this.authorization = authorization;
         this.avail = avail;
+        this.refreshtoken = refreshtoken;
+        this.profileImg = profileImg;
+        this.ageRange = ageRange;
     }
 }
