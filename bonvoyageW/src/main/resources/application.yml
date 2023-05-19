@@ -36,6 +36,9 @@ kakao:
     id: ${KAKAO_ID}
     secret: ${KAKAO_SECRET}
 
+jwt:
+  salt: ${JWT_SALT}
+
 feign:
   client:
     config:

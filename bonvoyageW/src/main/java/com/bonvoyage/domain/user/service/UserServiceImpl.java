@@ -9,7 +9,6 @@ import com.bonvoyage.domain.user.entity.UserEntity;
 import com.bonvoyage.domain.user.repository.OAuthIfoRepository;
 import com.bonvoyage.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.apache.ibatis.jdbc.Null;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -55,12 +54,13 @@ public class UserServiceImpl implements UserService {
         return Math.toIntExact(user.getUserId());
     }
     @Override
-    public void registerOauthInfo(int userId,long oauthId, KakaoTokenDto.Response kakaoToken) {
+    public void registerOauthInfo(int userId, long oauthId, KakaoTokenDto.Response kakaoToken, OAuthInfoEntity.OAuth2 type) {
         OAuthInfoEntity oAuthInfoEntity= OAuthInfoEntity.builder()
                 .accessToken(kakaoToken.getAccess_token())
                 .refreshToken(kakaoToken.getRefresh_token())
                 .oauthId(oauthId)
                 .userId(userId)
+                .type(type)
                 .build();
         oAuthIfoRepository.save(oAuthInfoEntity);
     }

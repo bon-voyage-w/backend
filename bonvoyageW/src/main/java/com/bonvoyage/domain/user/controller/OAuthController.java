@@ -4,6 +4,7 @@ import com.bonvoyage.domain.user.client.KakaoApiClient;
 import com.bonvoyage.domain.user.client.KakaoTokenClient;
 import com.bonvoyage.domain.user.dto.KakaoTokenDto;
 import com.bonvoyage.domain.user.dto.KakaoUserInfoDto;
+import com.bonvoyage.domain.user.entity.OAuthInfoEntity;
 import com.bonvoyage.domain.user.entity.UserEntity;
 import com.bonvoyage.domain.user.service.JWTService;
 import com.bonvoyage.domain.user.service.UserService;
@@ -52,7 +53,7 @@ public class OAuthController {
         int userId;
         if(!userService.isRegisterUser(userInfoDto.getId())){
             userId=userService.registerUser(userInfoDto);
-            userService.registerOauthInfo(userId,userInfoDto.getId(),kakaoToken);
+            userService.registerOauthInfo(userId,userInfoDto.getId(),kakaoToken, OAuthInfoEntity.OAuth2.kakao);
         }
         else{
             try{
