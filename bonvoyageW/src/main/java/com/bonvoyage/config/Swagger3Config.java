@@ -7,7 +7,7 @@ import org.springdoc.core.GroupedOpenApi;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 @Configuration
-public class SwaggerConfig {
+public class Swagger3Config {
     @Bean
     public OpenAPI openAPI() {
         Info info = new Info().title("BonVoyage")
