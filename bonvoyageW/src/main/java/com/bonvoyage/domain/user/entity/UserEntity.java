@@ -51,4 +51,8 @@ public class UserEntity {
         this.profileImg = profileImg;
         this.ageRange = ageRange;
     }
+
+    public void setUnavail(){
+        this.avail=false;
+    }
 }

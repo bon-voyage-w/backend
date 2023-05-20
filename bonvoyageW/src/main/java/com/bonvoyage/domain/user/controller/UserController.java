@@ -3,7 +3,6 @@ package com.bonvoyage.domain.user.controller;
 import com.bonvoyage.domain.user.dto.UserDto;
 import com.bonvoyage.domain.user.service.JWTService;
 import com.bonvoyage.domain.user.service.UserService;
-import com.bonvoyage.domain.user.service.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -46,7 +45,7 @@ public class UserController {
         }
         int userId=jwtService.getUserId(accessToken);
         String loginId=userService.updateUserDetail(userId, userDto);
-        return ResponseEntity.status(HttpStatus.OK).body(null);
+        return ResponseEntity.status(HttpStatus.OK).body(loginId);
     }
     @DeleteMapping
     public ResponseEntity<?> userDelete(@RequestHeader("Authorization") String accessToken){
@@ -54,8 +53,8 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("인증되지 않은 사용자입니다");
         }
         int userId=jwtService.getUserId(accessToken);
-        if(!userService.deleteUser(userId)){
-            return ResponseEntity.status(Htt)
+        if(!userService.withdrawalUser(userId)){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("삭제가 완료되지 않았습니다");
         }
         return ResponseEntity.status(HttpStatus.OK).body(null);
     }
@@ -67,18 +66,29 @@ public class UserController {
     }
 
     @PostMapping("/auth")
-    public ResponseEntity<?> userLogin(){
+    public ResponseEntity<?> userLogin(@RequestBody Map<String, String> loginInfo){
+        try{
 
-        return ResponseEntity.status(HttpStatus.OK).body(null);
+        if(userService.isAuthAvail(loginInfo)){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("잘못된 아이디 입니다");
+        }
+        }catch (Exception e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("잘못된 비밀번호 입니다");
+        }
+        int userId=userService.getUserIdByLoginId(loginInfo.get("id"));
+        Map<String,String> token=userService.setTokenInfo(userId);
+        return ResponseEntity.status(HttpStatus.OK).body(token);
     }
 
     @GetMapping("/auth")
     public ResponseEntity<?> userLogout(){
+
         return ResponseEntity.status(HttpStatus.OK).body(null);
     }
 
     @GetMapping("/like")
     public ResponseEntity<?> userLikeList(){
+
         return ResponseEntity.status(HttpStatus.OK).body(null);
     }
     @PostMapping("/like/{id}")

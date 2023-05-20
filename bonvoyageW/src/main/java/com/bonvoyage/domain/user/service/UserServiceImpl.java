@@ -121,4 +121,30 @@ public class UserServiceImpl implements UserService {
                 .build();
         return userDto;
     }
+
+    @Override
+    public boolean isAuthAvail(Map<String, String> loginInfo) throws Exception {
+        String loginId=loginInfo.get("id");
+        UserEntity userEntity=userRepository.findByLoginId(loginId).orElseThrow(NoSuchElementException::new);
+        if(userEntity.getPw().equals(loginInfo.get("pw"))){
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean withdrawalUser(int userId) {
+        try{UserEntity userEntity= userRepository.findById((long)userId).orElseThrow(NoSuchElementException::new);
+        userEntity.setUnavail();
+        return true;}
+        catch (Exception e){
+            return false;
+        }
+    }
+
+    @Override
+    public int getUserIdByLoginId(String loginId) {
+        UserEntity userEntity=userRepository.findByLoginId(loginId).orElseThrow(NoSuchElementException::new);
+        return Math.toIntExact(userEntity.getUserId());
+    }
 }

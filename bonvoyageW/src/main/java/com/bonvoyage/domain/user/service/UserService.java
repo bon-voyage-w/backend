@@ -23,5 +23,8 @@ public interface UserService {
     Map<String, String> setTokenInfo(int userId);
     UserDto findUserByLoginId(String loginId);
 
+    boolean isAuthAvail(Map<String, String> loginInfo) throws Exception;
+    boolean withdrawalUser(int userId);
 
+    int getUserIdByLoginId(String id);
 }
