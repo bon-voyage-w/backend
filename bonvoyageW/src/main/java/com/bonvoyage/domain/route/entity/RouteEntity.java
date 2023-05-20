@@ -15,14 +15,13 @@ public class RouteEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long routeId;
-
-    private int routeSeq;
+    private int totalDays;
     private int userId;
 
     @Builder
-    public RouteEntity(Long routeId, int routeSeq, int userId) {
+    public RouteEntity(Long routeId, int totalDays, int userId) {
         this.routeId = routeId;
-        this.routeSeq = routeSeq;
+        this.totalDays=totalDays;
         this.userId = userId;
     }
 }

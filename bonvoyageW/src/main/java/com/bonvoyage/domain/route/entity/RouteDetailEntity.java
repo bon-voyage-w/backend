@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -18,12 +19,15 @@ public class RouteDetailEntity {
     @Id
     private long routeDetailId;
     private int routeId;
-    private String routeContent;
+    private int daySeq;
+    @Column(name="content_io")
+    private int routeContent;
 
     @Builder
-    public RouteDetailEntity(long routeDetailId, int routeId, String routeContent) {
+    public RouteDetailEntity(long routeDetailId, int routeId,int daySeq, int routeContent) {
         this.routeDetailId = routeDetailId;
         this.routeId = routeId;
+        this.daySeq=daySeq;
         this.routeContent = routeContent;
     }
 }
