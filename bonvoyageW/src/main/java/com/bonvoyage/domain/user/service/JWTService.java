@@ -8,4 +8,5 @@ public interface JWTService {
     <T> String createRefreshToken(String key, T data);
     <T> String create(String key, T data, String subject, long expir);
     boolean checkToken(String jwt);
+    int getUserId(String authorization);
 }

@@ -4,12 +4,14 @@ import com.bonvoyage.domain.user.client.KakaoApiClient;
 import com.bonvoyage.domain.user.client.KakaoTokenClient;
 import com.bonvoyage.domain.user.dto.KakaoTokenDto;
 import com.bonvoyage.domain.user.dto.KakaoUserInfoDto;
+import com.bonvoyage.domain.user.dto.UserDto;
 import com.bonvoyage.domain.user.entity.OAuthInfoEntity;
 import com.bonvoyage.domain.user.entity.UserEntity;
 import com.bonvoyage.domain.user.service.JWTService;
 import com.bonvoyage.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -51,25 +53,23 @@ public class OAuthController {
         KakaoUserInfoDto userInfoDto=kakaoApiClient.requestKakaoUserInfo("Bearer "+kakaoToken.getAccess_token());
 
         int userId;
+        Map<String, String> token= new HashMap<>();
         if(!userService.isRegisterUser(userInfoDto.getId())){
             userId=userService.registerUser(userInfoDto);
-            userService.registerOauthInfo(userId,userInfoDto.getId(),kakaoToken, OAuthInfoEntity.OAuth2.kakao);
+            userService.registerOauthInfo(userId, userInfoDto.getId(),kakaoToken, OAuthInfoEntity.OAuth2.kakao);
+            token=userService.setTokenInfo(userId);
         }
         else{
             try{
-            userId=userService.getUserIdByOauth(userInfoDto);}
+            userId=userService.getUserIdByOauth(userInfoDto);
+            token=userService.setTokenInfo(userId);}
             catch (Exception e){
                 e.printStackTrace();
                 return ResponseEntity.noContent().build();
             }
         }
-        String accessToken=jwtService.createAccessToken("userId",userId);
-        String refreshToken=jwtService.createRefreshToken("userId",userId);
-        Map<String, String> token= new HashMap<>();
-        token.put("access_token",accessToken);
-        token.put("refresh_token",refreshToken);
 
-        return ResponseEntity.ok().body(token);
+        return ResponseEntity.status(HttpStatus.CREATED).body(token);
     }
 
 }

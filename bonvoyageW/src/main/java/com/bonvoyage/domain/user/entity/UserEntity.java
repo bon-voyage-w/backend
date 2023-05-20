@@ -22,7 +22,8 @@ public class UserEntity {
     private Date birth;
     private boolean authorization;
     private boolean avail;
-    private String refreshtoken;
+    @Setter
+    private String refreshToken;
     private String profileImg;
     private String ageRange;
 
@@ -36,7 +37,17 @@ public class UserEntity {
         this.birth = birth;
         this.authorization = authorization;
         this.avail = avail;
-        this.refreshtoken = refreshtoken;
+        this.refreshToken = refreshtoken;
+        this.profileImg = profileImg;
+        this.ageRange = ageRange;
+    }
+
+    public void updateUserDetail( String loginId, String pw, String email, String name, Date birth,  String profileImg, String ageRange){
+        this.loginId = loginId;
+        this.pw = pw;
+        this.email = email;
+        this.name = name;
+        this.birth = birth;
         this.profileImg = profileImg;
         this.ageRange = ageRange;
     }

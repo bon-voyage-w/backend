@@ -12,10 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -24,15 +21,16 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final OAuthIfoRepository oAuthIfoRepository;
+    private final JWTService jwtService;
 
 
     @Override
-    public List<UserDto> findUserList(Object o) {
+    public List<UserDto> findUserList() {
         List<UserEntity> userEntities=userRepository.findAll();
         List<UserDto> userDtos= new ArrayList<>();
         for (UserEntity user: userEntities) {
             UserDto userDto =UserDto.builder()
-                    .userId(user.getUserId())
+                    .loginId(user.getLoginId())
                     .name(user.getName())
                     .build();
             userDtos.add(userDto);
@@ -54,6 +52,25 @@ public class UserServiceImpl implements UserService {
         return Math.toIntExact(user.getUserId());
     }
     @Override
+    public int registerUser(UserDto userDto){
+        UserEntity userEntity = UserEntity.builder()
+                .authorization(false)
+                .email(userDto.getEmail())
+                .name(userDto.getName())
+                .profileImg(userDto.getProfileImg())
+                .avail(true)
+                .birth(userDto.getBirth())
+                .ageRange("20~29")
+                .build();
+        UserEntity user=userRepository.save(userEntity);
+        return Math.toIntExact(user.getUserId());
+    }
+    public String updateUserDetail(int userId, UserDto userDto){
+        UserEntity userEntity= userRepository.findById((long) userId).orElseThrow(NoSuchElementException::new);
+        userEntity.updateUserDetail(userDto.getLoginId(),userDto.getPw(),userDto.getEmail(),userDto.getName(),userDto.getBirth(),userDto.getProfileImg(),userDto.getAgeRange());
+        return userDto.getLoginId();
+    }
+    @Override
     public void registerOauthInfo(int userId, long oauthId, KakaoTokenDto.Response kakaoToken, OAuthInfoEntity.OAuth2 type) {
         OAuthInfoEntity oAuthInfoEntity= OAuthInfoEntity.builder()
                 .accessToken(kakaoToken.getAccess_token())
@@ -72,8 +89,36 @@ public class UserServiceImpl implements UserService {
         return oAuthInfoEntity.getUserId();
     }
 
+    @Override
+    public Map<String, String> setTokenInfo(int userId) {
+        Map<String,String> token= new HashMap<>();
+        String accessToken=jwtService.createAccessToken("userId",userId);
+        String refreshToken=jwtService.createRefreshToken("userId",userId);
+        token.put("access_token",accessToken);
+        token.put("refresh_token",refreshToken);
+
+        UserEntity userEntity=userRepository.findById((long)userId)
+                .orElseThrow(NoSuchElementException::new);
+        userEntity.setRefreshToken(refreshToken);
+
+        return token;
+    }
+
     @Override //해당 oauthId를 가진 유저가 이미 존재하는가
     public boolean isRegisterUser(Long oauthId) {
         return oAuthIfoRepository.existsByOauthId(oauthId);
+    }
+
+    public UserDto findUserByLoginId(String loginId) {
+        UserEntity userEntity= userRepository.findByLoginId(loginId).orElseThrow(NoSuchElementException::new);
+        UserDto userDto =UserDto.builder()
+                .email(userEntity.getEmail())
+                .loginId(userEntity.getLoginId())
+                .ageRange(userEntity.getAgeRange())
+                .authorization(userEntity.isAuthorization())
+                .profileImg(userEntity.getProfileImg())
+                .name(userEntity.getName())
+                .build();
+        return userDto;
     }
 }

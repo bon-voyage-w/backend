@@ -1,6 +1,8 @@
 package com.bonvoyage.domain.user.controller;
 
 import com.bonvoyage.domain.user.dto.UserDto;
+import com.bonvoyage.domain.user.service.JWTService;
+import com.bonvoyage.domain.user.service.UserService;
 import com.bonvoyage.domain.user.service.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -8,17 +10,19 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/users")
 @RequiredArgsConstructor
 public class UserController {
 
-    private final UserServiceImpl userService;
+    private final UserService userService;
+    private final JWTService jwtService;
     @GetMapping("")
     public ResponseEntity<?> userList(){
         try {
-            List<UserDto> list = userService.findUserList(null);
+            List<UserDto> list = userService.findUserList();
             if(list != null && !list.isEmpty()) {
                 return new ResponseEntity<>(list, HttpStatus.OK);
 //				return new ResponseEntity<List<MemberDto>>(HttpStatus.NOT_FOUND);
@@ -30,22 +34,36 @@ public class UserController {
         }
     }
     @PostMapping("")
-    public ResponseEntity<?> userRegister(){
-
-        return ResponseEntity.status(HttpStatus.OK).body(null);
+    public ResponseEntity<?> userRegister(UserDto userDto){
+        int userId= userService.registerUser(userDto);
+        Map<String,String> token=userService.setTokenInfo(userId);
+        return ResponseEntity.status(HttpStatus.CREATED).body(token);
     }
     @PutMapping
-    public ResponseEntity<?> userModify(){
+    public ResponseEntity<?> userModify(@RequestHeader("Authorization") String accessToken,UserDto userDto){
+        if(jwtService.checkToken(accessToken)){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("인증되지 않은 사용자입니다");
+        }
+        int userId=jwtService.getUserId(accessToken);
+        String loginId=userService.updateUserDetail(userId, userDto);
         return ResponseEntity.status(HttpStatus.OK).body(null);
     }
     @DeleteMapping
-    public ResponseEntity<?> userDelete(){
+    public ResponseEntity<?> userDelete(@RequestHeader("Authorization") String accessToken){
+        if(jwtService.checkToken(accessToken)){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("인증되지 않은 사용자입니다");
+        }
+        int userId=jwtService.getUserId(accessToken);
+        if(!userService.deleteUser(userId)){
+            return ResponseEntity.status(Htt)
+        }
         return ResponseEntity.status(HttpStatus.OK).body(null);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> userDetail(@PathVariable(value = "id") int userId){
-        return ResponseEntity.status(HttpStatus.OK).body(null);
+    public ResponseEntity<?> userDetail(@PathVariable(value = "id") String loginId){
+        UserDto userDto= userService.findUserByLoginId(loginId);
+        return ResponseEntity.status(HttpStatus.OK).body(userDto);
     }
 
     @PostMapping("/auth")

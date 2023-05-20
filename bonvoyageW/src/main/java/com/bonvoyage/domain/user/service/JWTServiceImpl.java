@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 @Slf4j
 @Service
@@ -28,7 +29,7 @@ public class JWTServiceImpl implements JWTService {
     @Value("${jwt.salt}")
     private String SALT;
 
-    private static final int ACCESS_TOKEN_EXPIRE_MINUTES = 1; // 분단위
+    private static final int ACCESS_TOKEN_EXPIRE_MINUTES = 15; // 분단위
     private static final int REFRESH_TOKEN_EXPIRE_MINUTES = 2; // 주단위
 
     @Override
@@ -119,11 +120,8 @@ public class JWTServiceImpl implements JWTService {
     }
 
 
-/*
-    public Map<String, Object> get(String key) {
-        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes())
-                .getRequest();
-        String jwt = request.getHeader("access-token");
+    public Map<String, Object> getClaimBody(String jwt) {
+
         Jws<Claims> claims = null;
         try {
             claims = Jwts.parser().setSigningKey(SALT.getBytes("UTF-8")).parseClaimsJws(jwt);
@@ -133,7 +131,7 @@ public class JWTServiceImpl implements JWTService {
 //			} else {
             logger.error(e.getMessage());
 //			}
-            throw new UnAuthorizedException();
+//            throw new UnAuthorizedException();
 //			개발환경
 //			Map<String,Object> testMap = new HashMap<>();
 //			testMap.put("userid", userid);
@@ -143,10 +141,10 @@ public class JWTServiceImpl implements JWTService {
         logger.info("value : {}", value);
         return value;
     }
-*/
-
-
-/*    public String getUserId() {
-        return (String) this.get("user").get("userid");
-    }*/
+@Override
+    public int getUserId(String authorization) {
+        if (Pattern.matches("^Bearer .*", authorization)) {
+            authorization = authorization.replaceAll("^Bearer( )*", "");}
+        return (Integer) this.getClaimBody(authorization).get("userId");
+    }
 }
