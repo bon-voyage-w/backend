@@ -30,7 +30,9 @@ spring:
     properties:
       hibernate.format_sql: true
       dialect: org.hibernate.dialect.MySQL8InnoDBDialect
-
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
 kakao:
   client:
     id: ${KAKAO_ID}
@@ -48,3 +50,4 @@ feign:
 logging:
   level:
     com.bonvoyage: info
+

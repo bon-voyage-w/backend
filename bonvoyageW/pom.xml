@@ -57,6 +57,13 @@
 			<artifactId>spring-restdocs-mockmvc</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<!--	Swagger SpringDoc	-->
+		<!-- https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-ui -->
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-ui</artifactId>
+			<version>1.7.0</version>
+		</dependency>
 		<!-- JWT -->
 		<!-- https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt -->
 		<dependency>
@@ -101,7 +108,6 @@
 						<artifactId>spring-restdocs-asciidoctor</artifactId>
 						<version>${spring-restdocs.version}</version>
 					</dependency>
-
 				</dependencies>
 			</plugin>
 			<plugin>
