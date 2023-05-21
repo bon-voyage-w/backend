@@ -17,11 +17,13 @@ public class RouteDto {
     @Data
     public static class RouteDetail{
         int daySeq;
-        List<AttractionInfoDto> attractionList;
+        List<Integer> attractionIdList;
+        List<AttractionInfoDto> attractionInfoList;
         @Builder
-        public RouteDetail(int daySeq, List<AttractionInfoDto> attractionList) {
+        public RouteDetail(int daySeq, List<AttractionInfoDto> attractionInfoList, List<Integer> attractionIdList) {
             this.daySeq = daySeq;
-            this.attractionList = attractionList;
+            this.attractionIdList=attractionIdList;
+            this.attractionInfoList = attractionInfoList;
         }
     }
     @Builder

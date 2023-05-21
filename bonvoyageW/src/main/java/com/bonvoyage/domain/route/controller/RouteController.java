@@ -2,6 +2,8 @@ package com.bonvoyage.domain.route.controller;
 
 import com.bonvoyage.domain.route.dto.RouteDto;
 import com.bonvoyage.domain.route.service.RouteService;
+import com.bonvoyage.domain.user.service.JWTService;
+import com.bonvoyage.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +17,7 @@ import java.util.NoSuchElementException;
 @RequestMapping("/routes")
 public class RouteController {
     private final RouteService routeService;
+    private final JWTService jwtService;
 
     @GetMapping()
     public ResponseEntity<?> routeList(){
@@ -29,12 +32,20 @@ public class RouteController {
     @PostMapping
     public ResponseEntity<?> routeAdd(@RequestHeader("Authorization") String accessToken,
                                       @RequestBody RouteDto routeDto){
-        int routeId=routeService.routeAdd(routeDto);
+        if(jwtService.checkToken(accessToken)){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("인증되지 않은 사용자입니다");
+        }
+        int userId=jwtService.getUserId(accessToken);
+        int routeId=routeService.addRoute(userId,routeDto);
         return ResponseEntity.status(HttpStatus.OK).body(null);
     }
     @DeleteMapping("/{id}")
     public ResponseEntity<?> routeDelete(@RequestHeader("Authorization") String accessToken,
                                          @PathVariable("id") int routeId){
+        if(jwtService.checkToken(accessToken)){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("인증되지 않은 사용자입니다");
+        }
+        int userId=jwtService.getUserId(accessToken);
         try {
             routeService.deleteRoute(routeId);
         }catch (Exception e){
@@ -46,13 +57,20 @@ public class RouteController {
     public ResponseEntity<?> routeModify(@RequestHeader("Authorization") String accessToken,
                                          @PathVariable("id") int routeId,
                                          @RequestBody RouteDto routeDto){
-        int modifiedRouteId=routeService.modifyRoute(routeDto);
+        if(jwtService.checkToken(accessToken)){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("인증되지 않은 사용자입니다");
+        }
+        int userId=jwtService.getUserId(accessToken);
+        int modifiedRouteId=routeService.modifyRoute(userId,routeId,routeDto);
         return ResponseEntity.status(HttpStatus.OK).body(modifiedRouteId);
     }
     @GetMapping("/{id}")
     public ResponseEntity<?> routeDetail(@RequestHeader("Authorization") String accessToken,
                                          @PathVariable("id") int routeId){
-
+        if(jwtService.checkToken(accessToken)){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("인증되지 않은 사용자입니다");
+        }
+        int userId=jwtService.getUserId(accessToken);
         RouteDto routeDto = routeService.findRouteDetail(routeId);
         return ResponseEntity.status(HttpStatus.OK).body(routeDto);
     }

@@ -7,13 +7,13 @@ import java.util.List;
 public interface RouteService {
     List<RouteDto> findRouteList();
 
-    int routeAdd(RouteDto routeDto);
+    int addRoute(int userId, RouteDto routeDto);
 
     void deleteRoute(int routeId);
 
     RouteDto findRouteDetail(int routeId);
 
-    int modifyRoute(RouteDto routeDto);
+    int modifyRoute(int userId,int routeId,RouteDto routeDto);
 
     List<RouteDto> findRouteListWithDetail();
 }

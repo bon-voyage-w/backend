@@ -38,13 +38,37 @@ public class RouteServiceImpl implements RouteService {
     }
 
     @Override
-    public int routeAdd(RouteDto routeDto) {
-        return 0;
+    public int addRoute(int userId,RouteDto routeDto) {
+        RouteEntity routeEntity= RouteEntity.builder()
+                .createdTime(routeDto.getCreatedTime())
+                .routeTitle(routeDto.getTitle())
+                .totalDays(routeDto.getRouteDailyList().size())
+                .build();
+        RouteEntity newRouteEntity=routeRepository.save(routeEntity);
+        int totalDays=newRouteEntity.getTotalDays();
+        int newRouteId= Math.toIntExact(newRouteEntity.getRouteId());
+        int i=1;
+        for(RouteDto.RouteDetail routeDetail: routeDto.getRouteDailyList()){
+            this.addRouteDetail(newRouteId,routeDetail);
+        }
+        return newRouteId;
     }
-
+    private void addRouteDetail(int routeId, RouteDto.RouteDetail routeDetail){
+        int visitSeq=1;
+        for(int attractionId:routeDetail.getAttractionIdList()){
+            RouteDetailEntity routeDetailEntity=RouteDetailEntity.builder()
+                    .routeId(routeId)
+                    .daySeq(routeDetail.getDaySeq())
+                    .routeContent(attractionId)
+                    .visitSeq(visitSeq)
+                    .build();
+            routeDetailRepository.save(routeDetailEntity);
+            visitSeq++;
+        }
+    }
     @Override
     public void deleteRoute(int routeId) {
-
+        routeRepository.deleteById((long)routeId);
     }
 
     @Override
@@ -56,9 +80,10 @@ public class RouteServiceImpl implements RouteService {
     }
 
     @Override
-    public int modifyRoute(RouteDto routeDto) {
-
-        return 0;
+    public int modifyRoute(int userId,int routeId,RouteDto routeDto) {
+        this.deleteRoute(routeId);
+        int newRouteId=this.addRoute(userId,routeDto);
+        return newRouteId;
     }
 
     @Override
@@ -112,7 +137,7 @@ public class RouteServiceImpl implements RouteService {
         for(int daySeq=1;daySeq<= totalDays;daySeq++){
             RouteDto.RouteDetail routeDetail= RouteDto.RouteDetail.builder()
                     .daySeq(daySeq)
-                    .attractionList(attractionInfoDtoListForDaySeq[daySeq-1]).build();
+                    .attractionInfoList(attractionInfoDtoListForDaySeq[daySeq-1]).build();
             routeDetailList.add(routeDetail);
         }
         return routeDetailList;

@@ -5,19 +5,17 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.List;
 
 @Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name="route")
+@Table(name="route_detail")
 public class RouteDetailEntity {
     @Id
     private long routeDetailId;
+
     private int routeId;
     private int daySeq;
     private int visitSeq;
