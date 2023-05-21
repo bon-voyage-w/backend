@@ -20,7 +20,7 @@ public class RouteDetailEntity {
     private long routeDetailId;
     private int routeId;
     private int daySeq;
-    @Column(name="content_io")
+    @Column(name="content_id")
     private int routeContent;
 
     @Builder
