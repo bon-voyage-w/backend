@@ -1,6 +1,7 @@
 package com.bonvoyage.domain.shareboard.entity;
 
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -14,6 +15,7 @@ import javax.persistence.Table;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name="share_board")
 public class ShareBoardEntity {
+
     @Id
     private long share_board_id;
     private String title;
@@ -21,4 +23,14 @@ public class ShareBoardEntity {
     private int hit;
     private int user_id;
     private int route_id;
+
+    @Builder
+    public ShareBoardEntity(int share_board_id, String title, String content, int hit, int user_id, int route_id) {
+        this.share_board_id = share_board_id;
+        this.title = title;
+        this.content = content;
+        this.hit = hit;
+        this.user_id = user_id;
+        this.route_id = route_id;
+    }
 }
