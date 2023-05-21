@@ -48,7 +48,7 @@ public class RouteController {
         int userId=jwtService.getUserId(accessToken);
         try {
             routeService.deleteRoute(userId,routeId);
-        }catch (Exception e){
+        }catch (SecurityException e){return ResponseEntity.status(HttpStatus.FORBIDDEN).body("잘못된 요청입니다.");}catch (Exception e){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("잘못된 요청입니다.");
         }
         return ResponseEntity.status(HttpStatus.OK).body(null);
@@ -64,7 +64,7 @@ public class RouteController {
         try{
             int modifiedRouteId=routeService.modifyRoute(userId,routeId,routeDto);
             return ResponseEntity.status(HttpStatus.OK).body(modifiedRouteId);
-        }catch (IllegalAccessException e){
+        }catch (SecurityException e){
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("권한이 없습니다");
         }
     }

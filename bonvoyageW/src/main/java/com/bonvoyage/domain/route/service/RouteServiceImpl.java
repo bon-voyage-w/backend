@@ -66,10 +66,10 @@ public class RouteServiceImpl implements RouteService {
         }
     }
     @Override
-    public void deleteRoute(int userId,int routeId) throws IllegalAccessException {
+    public void deleteRoute(int userId,int routeId) throws SecurityException {
         RouteEntity routeEntity=routeRepository.findById((long)routeId).orElseThrow(NoSuchElementException::new);
         if(routeEntity.getUserId()!=userId){
-            throw new IllegalAccessException();
+            throw new SecurityException();
         }
         routeRepository.deleteById((long)routeId);
     }
@@ -83,7 +83,7 @@ public class RouteServiceImpl implements RouteService {
     }
 
     @Override
-    public int modifyRoute(int userId,int routeId,RouteDto routeDto) throws IllegalAccessException {
+    public int modifyRoute(int userId,int routeId,RouteDto routeDto) throws SecurityException {
         this.deleteRoute(userId,routeId);
         int newRouteId=this.addRoute(userId,routeDto);
         return newRouteId;
