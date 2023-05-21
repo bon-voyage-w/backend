@@ -97,7 +97,7 @@ public class RouteServiceImpl implements RouteService {
         int totalDays=routeEntity.getTotalDays();
         List<RouteDetailEntity>[] routeDetailEntityListForDaySeq= new ArrayList[totalDays];
         for(int daySeq=1;daySeq<= totalDays;daySeq++){
-            routeDetailEntityListForDaySeq[daySeq-1]=routeDetailRepository.findByRouteIdAndDaySeqOOrderByVisitSeqAsc(routeEntity.getRouteId(),daySeq);
+            routeDetailEntityListForDaySeq[daySeq-1]=routeDetailRepository.findByRouteIdAndDaySeqOrderByVisitSeqAsc(routeEntity.getRouteId(),daySeq);
         }
         List<AttractionInfoDto>[] attractionInfoDtoListForDaySeq= new List[totalDays];
         for(int daySeq=1;daySeq<= totalDays;daySeq++){

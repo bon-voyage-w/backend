@@ -11,5 +11,5 @@ import java.util.List;
 @Repository
 public interface RouteDetailRepository extends JpaRepository<RouteDetailEntity,Long> {
     List<RouteDetailEntity> findByRouteId(long routeId);
-    List<RouteDetailEntity> findByRouteIdAndDaySeqOOrderByVisitSeqAsc(long routeId,int daySeq);
+    List<RouteDetailEntity> findByRouteIdAndDaySeqOrderByVisitSeqAsc(long routeId,int daySeq);
 }

@@ -14,7 +14,8 @@ public class RouteDto {
     List<RouteDetail> routeDailyList;
     LocalDateTime createdTime;
     String title;
-    public class RouteDetail{
+    @Data
+    public static class RouteDetail{
         int daySeq;
         List<AttractionInfoDto> attractionList;
         @Builder

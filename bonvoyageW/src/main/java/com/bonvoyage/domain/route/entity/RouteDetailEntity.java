@@ -25,9 +25,10 @@ public class RouteDetailEntity {
     private int routeContent;
 
     @Builder
-    public RouteDetailEntity(long routeDetailId, int routeId,int daySeq, int routeContent) {
+    public RouteDetailEntity(long routeDetailId, int routeId,int daySeq,int visitSeq, int routeContent) {
         this.routeDetailId = routeDetailId;
         this.routeId = routeId;
+        this.visitSeq=visitSeq;
         this.daySeq=daySeq;
         this.routeContent = routeContent;
     }
