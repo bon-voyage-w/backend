@@ -9,8 +9,6 @@ import java.util.List;
 @Data
 public class RouteDto {
     int routeId;
-    String writerName;
-    String writerLoginId;
     List<RouteDetail> routeDailyList;
     LocalDateTime createdTime;
     String title;
@@ -27,10 +25,8 @@ public class RouteDto {
         }
     }
     @Builder
-    public RouteDto(int routeId,String writerName, String writerLoginId, List<RouteDetail> routeDailyList, LocalDateTime createdTime, String title) {
+    public RouteDto(int routeId, List<RouteDetail> routeDailyList, LocalDateTime createdTime, String title) {
         this.routeId=routeId;
-        this.writerName = writerName;
-        this.writerLoginId = writerLoginId;
         this.routeDailyList = routeDailyList;
         this.createdTime = createdTime;
         this.title = title;

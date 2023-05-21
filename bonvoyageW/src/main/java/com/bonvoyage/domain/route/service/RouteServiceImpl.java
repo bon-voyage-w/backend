@@ -1,8 +1,6 @@
 package com.bonvoyage.domain.route.service;
 
 import com.bonvoyage.domain.attraction.dto.AttractionInfoDto;
-import com.bonvoyage.domain.attraction.entity.AttractionInfoEntity;
-import com.bonvoyage.domain.attraction.repository.AttractionInfoRepository;
 import com.bonvoyage.domain.attraction.service.AttractionService;
 import com.bonvoyage.domain.route.dto.RouteDto;
 import com.bonvoyage.domain.route.entity.RouteDetailEntity;
@@ -43,6 +41,7 @@ public class RouteServiceImpl implements RouteService {
                 .createdTime(routeDto.getCreatedTime())
                 .routeTitle(routeDto.getTitle())
                 .totalDays(routeDto.getRouteDailyList().size())
+                .userId(userId)
                 .build();
         RouteEntity newRouteEntity=routeRepository.save(routeEntity);
         int totalDays=newRouteEntity.getTotalDays();
@@ -67,7 +66,11 @@ public class RouteServiceImpl implements RouteService {
         }
     }
     @Override
-    public void deleteRoute(int routeId) {
+    public void deleteRoute(int userId,int routeId) throws IllegalAccessException {
+        RouteEntity routeEntity=routeRepository.findById((long)routeId).orElseThrow(NoSuchElementException::new);
+        if(routeEntity.getUserId()!=userId){
+            throw new IllegalAccessException();
+        }
         routeRepository.deleteById((long)routeId);
     }
 
@@ -80,8 +83,8 @@ public class RouteServiceImpl implements RouteService {
     }
 
     @Override
-    public int modifyRoute(int userId,int routeId,RouteDto routeDto) {
-        this.deleteRoute(routeId);
+    public int modifyRoute(int userId,int routeId,RouteDto routeDto) throws IllegalAccessException {
+        this.deleteRoute(userId,routeId);
         int newRouteId=this.addRoute(userId,routeDto);
         return newRouteId;
     }
@@ -101,8 +104,6 @@ public class RouteServiceImpl implements RouteService {
                 .routeId(Math.toIntExact(routeEntity.getRouteId()))
                 .title(routeEntity.getRouteTitle())
                 .createdTime(routeEntity.getCreatedTime())
-                .writerLoginId(userRepository.getReferenceById((long)routeEntity.getUserId()).getLoginId())
-                .writerName(userRepository.getReferenceById((long)routeEntity.getUserId()).getName())
                 .build();
         return routeDto;
     }
@@ -112,8 +113,6 @@ public class RouteServiceImpl implements RouteService {
                 .routeId(Math.toIntExact(routeEntity.getRouteId()))
                 .title(routeEntity.getRouteTitle())
                 .createdTime(routeEntity.getCreatedTime())
-                .writerLoginId(userRepository.getReferenceById((long)routeEntity.getUserId()).getLoginId())
-                .writerName(userRepository.getReferenceById((long)routeEntity.getUserId()).getName())
                 .routeDailyList(this.findDailyRouteDetailDtoList(routeEntity))
                 .build();
         return routeDto;

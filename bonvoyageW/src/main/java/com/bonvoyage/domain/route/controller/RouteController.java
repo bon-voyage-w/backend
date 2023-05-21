@@ -36,8 +36,8 @@ public class RouteController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("인증되지 않은 사용자입니다");
         }
         int userId=jwtService.getUserId(accessToken);
-        int routeId=routeService.addRoute(userId,routeDto);
-        return ResponseEntity.status(HttpStatus.OK).body(null);
+        int newRouteId=routeService.addRoute(userId,routeDto);
+        return ResponseEntity.status(HttpStatus.OK).body(newRouteId);
     }
     @DeleteMapping("/{id}")
     public ResponseEntity<?> routeDelete(@RequestHeader("Authorization") String accessToken,
@@ -47,7 +47,7 @@ public class RouteController {
         }
         int userId=jwtService.getUserId(accessToken);
         try {
-            routeService.deleteRoute(routeId);
+            routeService.deleteRoute(userId,routeId);
         }catch (Exception e){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("잘못된 요청입니다.");
         }
@@ -61,8 +61,12 @@ public class RouteController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("인증되지 않은 사용자입니다");
         }
         int userId=jwtService.getUserId(accessToken);
-        int modifiedRouteId=routeService.modifyRoute(userId,routeId,routeDto);
-        return ResponseEntity.status(HttpStatus.OK).body(modifiedRouteId);
+        try{
+            int modifiedRouteId=routeService.modifyRoute(userId,routeId,routeDto);
+            return ResponseEntity.status(HttpStatus.OK).body(modifiedRouteId);
+        }catch (IllegalAccessException e){
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("권한이 없습니다");
+        }
     }
     @GetMapping("/{id}")
     public ResponseEntity<?> routeDetail(@RequestHeader("Authorization") String accessToken,

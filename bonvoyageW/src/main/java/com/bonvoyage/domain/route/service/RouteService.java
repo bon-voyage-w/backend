@@ -9,11 +9,11 @@ public interface RouteService {
 
     int addRoute(int userId, RouteDto routeDto);
 
-    void deleteRoute(int routeId);
+    void deleteRoute(int userId,int routeId) throws IllegalAccessException;
 
     RouteDto findRouteDetail(int routeId);
 
-    int modifyRoute(int userId,int routeId,RouteDto routeDto);
+    int modifyRoute(int userId,int routeId,RouteDto routeDto) throws IllegalAccessException;
 
     List<RouteDto> findRouteListWithDetail();
 }
