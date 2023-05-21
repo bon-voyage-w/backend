@@ -27,6 +27,11 @@ public class AttractionController {
         return ResponseEntity.status(HttpStatus.OK).body(attractionService.findByContentId(contentId));
     }
 
+    @GetMapping("/{contentTypeId}")
+    public ResponseEntity<List<AttractionInfoDto>> findByContentTypeId(@PathVariable("contentTypeId") Long contentTypeId) {
+        return ResponseEntity.status(HttpStatus.OK).body(attractionService.findByContentTypeId(contentTypeId));
+    }
+
     @GetMapping("/search")
     public ResponseEntity<List<AttractionInfoDto>> findByTitle(@RequestParam String title) {
         return ResponseEntity.status(HttpStatus.OK).body(attractionService.findByTitle(title));

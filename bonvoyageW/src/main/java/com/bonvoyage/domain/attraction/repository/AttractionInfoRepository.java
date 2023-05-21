@@ -10,4 +10,6 @@ import java.util.List;
 @Repository
 public interface AttractionInfoRepository extends JpaRepository<AttractionInfoEntity, Long> {
     List<AttractionInfoEntity> findByTitleContaining(String title);
+
+    List<AttractionInfoEntity> findByContentTypeId(Long contentTypeId);
 }

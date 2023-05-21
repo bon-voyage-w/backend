@@ -33,18 +33,6 @@ public class AttractionServiceImpl implements AttractionService {
         return result;
     }
 
-//    @Override
-//    public AttractionDetailPageInfoDto findByContentId(Long contentId) {
-//        AttractionDescriptionEntity attractionDescriptionEntity = attractionDescriptionRepository.findById(contentId)
-//                .orElseThrow(NullPointerException::new);
-//
-//        AttractionDetailPageInfoDto attractionDetailPageInfoDto = entityToDto(attractionDescriptionEntity);
-//        return attractionDetailPageInfoDto;
-//
-//        AttractionDetailPageInfoDto attractionDetailPageInfoDto = entityToDto(attractionInfoEntity);
-//        return attractionDetailPageInfoDto;
-//    }
-
     @Override
     public List<AttractionInfoDto> findByTitle(String title) {
         List<AttractionInfoEntity> entityList = attractionInfoRepository.findByTitleContaining(title);
@@ -70,9 +58,23 @@ public class AttractionServiceImpl implements AttractionService {
         return attractionDetailPageInfoDto;
     }
 
+    @Override
+    public List<AttractionInfoDto> findByContentTypeId(Long contentTypeId) {
+        List<AttractionInfoEntity> entityList = attractionInfoRepository.findByContentTypeId(contentTypeId);
+        List<AttractionInfoDto> result = new ArrayList<>();
+
+        for(AttractionInfoEntity attractionInfoEntity : entityList) {
+            AttractionInfoDto attractionInfoDto = entityToDto(attractionInfoEntity);
+            result.add(attractionInfoDto);
+        }
+
+        return result;
+    }
+
     public AttractionInfoDto entityToDto(AttractionInfoEntity attractionInfoEntity) {
         AttractionInfoDto attractionInfoDto = AttractionInfoDto.builder()
                 .contentId(attractionInfoEntity.getContentId())
+                .contentTypeId(attractionInfoEntity.getContentTypeId())
                 .title(attractionInfoEntity.getTitle())
                 .addr1(attractionInfoEntity.getAddr1())
                 .tel(attractionInfoEntity.getTel())

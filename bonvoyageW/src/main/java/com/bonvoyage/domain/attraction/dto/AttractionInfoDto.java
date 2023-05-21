@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 public class AttractionInfoDto {
 
     private long contentId;
+    private long contentTypeId;
     private String title;
     private String addr1;
     private String tel;
