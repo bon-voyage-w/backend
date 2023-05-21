@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 @Data
 public class RouteDto {
-
+    int routeId;
     String writerName;
     String writerLoginId;
     List<RouteDetail> routeDailyList;
@@ -17,9 +17,15 @@ public class RouteDto {
     public class RouteDetail{
         int daySeq;
         List<AttractionInfoDto> attractionList;
+        @Builder
+        public RouteDetail(int daySeq, List<AttractionInfoDto> attractionList) {
+            this.daySeq = daySeq;
+            this.attractionList = attractionList;
+        }
     }
     @Builder
-    public RouteDto(String writerName, String writerLoginId, List<RouteDetail> routeDailyList, LocalDateTime createdTime, String title) {
+    public RouteDto(int routeId,String writerName, String writerLoginId, List<RouteDetail> routeDailyList, LocalDateTime createdTime, String title) {
+        this.routeId=routeId;
         this.writerName = writerName;
         this.writerLoginId = writerLoginId;
         this.routeDailyList = routeDailyList;
