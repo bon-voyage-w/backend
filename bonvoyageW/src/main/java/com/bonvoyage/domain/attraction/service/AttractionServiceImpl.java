@@ -6,7 +6,9 @@ import com.bonvoyage.domain.attraction.entity.AttractionDescriptionEntity;
 import com.bonvoyage.domain.attraction.entity.AttractionInfoEntity;
 import com.bonvoyage.domain.attraction.repository.AttractionDescriptionRepository;
 import com.bonvoyage.domain.attraction.repository.AttractionInfoRepository;
+import com.bonvoyage.domain.attraction.specification.AttractionSpecification;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -34,8 +36,27 @@ public class AttractionServiceImpl implements AttractionService {
     }
 
     @Override
-    public List<AttractionInfoDto> findByTitle(String title) {
-        List<AttractionInfoEntity> entityList = attractionInfoRepository.findByTitleContaining(title);
+    public List<AttractionInfoDto> findSearch(String keyword, int sidoCode, int gugunCode, Long contentTypeId) {
+//        1. 조건 생성
+//          1-1. 검색어 존재 여부
+        Specification<AttractionInfoEntity> spec = (root, query, criteriaBuilder) -> null;
+        if(keyword != null) {
+            spec = spec.and(AttractionSpecification.containingTitle(keyword));
+        }
+//          1-2. 시도, 구군
+        if(sidoCode > 0) {
+            spec = spec.and(AttractionSpecification.equalSido(sidoCode));
+            if(gugunCode > 0) {
+                spec = spec.and(AttractionSpecification.equalGugun(gugunCode));
+            }
+        }
+//        1-3. 분류
+        if(contentTypeId != null) {
+
+        }
+
+//        2. 조건 적용
+        List<AttractionInfoEntity> entityList = attractionInfoRepository.findAll(spec);
         List<AttractionInfoDto> result = new ArrayList<>();
 
         for(AttractionInfoEntity attractionInfoEntity : entityList) {
@@ -56,19 +77,6 @@ public class AttractionServiceImpl implements AttractionService {
                 .build();
 
         return attractionDetailPageInfoDto;
-    }
-
-    @Override
-    public List<AttractionInfoDto> findByContentTypeId(Long contentTypeId) {
-        List<AttractionInfoEntity> entityList = attractionInfoRepository.findByContentTypeId(contentTypeId);
-        List<AttractionInfoDto> result = new ArrayList<>();
-
-        for(AttractionInfoEntity attractionInfoEntity : entityList) {
-            AttractionInfoDto attractionInfoDto = entityToDto(attractionInfoEntity);
-            result.add(attractionInfoDto);
-        }
-
-        return result;
     }
 
     public AttractionInfoDto entityToDto(AttractionInfoEntity attractionInfoEntity) {

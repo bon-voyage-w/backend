@@ -8,10 +8,9 @@ import java.util.List;
 public interface AttractionService {
 
     List<AttractionInfoDto> getAttractionList();
-//    AttractionInfoDto findByContentId(Long contentId);
     AttractionDetailPageInfoDto findByContentId(Long contentId);
-    List<AttractionInfoDto> findByContentTypeId(Long contentTypeId);
 
-    List<AttractionInfoDto> findByTitle(String title);
+//    List<AttractionInfoDto> findByTitle(String title);
+    List<AttractionInfoDto> findSearch(String keyword, int sidoCode, int gugunCode, Long contentTypeId);
 
 }
