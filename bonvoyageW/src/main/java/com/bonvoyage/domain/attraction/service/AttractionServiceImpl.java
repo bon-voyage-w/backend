@@ -1,7 +1,10 @@
 package com.bonvoyage.domain.attraction.service;
 
+import com.bonvoyage.domain.attraction.dto.AttractionDetailPageInfoDto;
 import com.bonvoyage.domain.attraction.dto.AttractionInfoDto;
+import com.bonvoyage.domain.attraction.entity.AttractionDescriptionEntity;
 import com.bonvoyage.domain.attraction.entity.AttractionInfoEntity;
+import com.bonvoyage.domain.attraction.repository.AttractionDescriptionRepository;
 import com.bonvoyage.domain.attraction.repository.AttractionInfoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,6 +17,7 @@ import java.util.List;
 public class AttractionServiceImpl implements AttractionService {
 
     private final AttractionInfoRepository attractionInfoRepository;
+    private final AttractionDescriptionRepository attractionDescriptionRepository;
 
     @Override
     public List<AttractionInfoDto> getAttractionList() {
@@ -29,14 +33,17 @@ public class AttractionServiceImpl implements AttractionService {
         return result;
     }
 
-    @Override
-    public AttractionInfoDto findByContentId(long contentId) {
-        AttractionInfoEntity attractionInfoEntity = attractionInfoRepository.findById(contentId)
-                .orElseThrow(NullPointerException::new);
-
-        AttractionInfoDto attractionInfoDto = entityToDto(attractionInfoEntity);
-        return attractionInfoDto;
-    }
+//    @Override
+//    public AttractionDetailPageInfoDto findByContentId(Long contentId) {
+//        AttractionDescriptionEntity attractionDescriptionEntity = attractionDescriptionRepository.findById(contentId)
+//                .orElseThrow(NullPointerException::new);
+//
+//        AttractionDetailPageInfoDto attractionDetailPageInfoDto = entityToDto(attractionDescriptionEntity);
+//        return attractionDetailPageInfoDto;
+//
+//        AttractionDetailPageInfoDto attractionDetailPageInfoDto = entityToDto(attractionInfoEntity);
+//        return attractionDetailPageInfoDto;
+//    }
 
     @Override
     public List<AttractionInfoDto> findByTitle(String title) {
@@ -49,6 +56,18 @@ public class AttractionServiceImpl implements AttractionService {
         }
 
         return result;
+    }
+
+    @Override
+    public AttractionDetailPageInfoDto findByContentId(Long contentId) {
+        AttractionDescriptionEntity attractionDescriptionEntity = attractionDescriptionRepository.findByContentId(contentId);
+
+        AttractionDetailPageInfoDto attractionDetailPageInfoDto = AttractionDetailPageInfoDto.builder()
+                .attractionInfoDto(entityToDto(attractionDescriptionEntity.getAttractionInfoEntity()))
+                .overview(attractionDescriptionEntity.getOverview())
+                .build();
+
+        return attractionDetailPageInfoDto;
     }
 
     public AttractionInfoDto entityToDto(AttractionInfoEntity attractionInfoEntity) {

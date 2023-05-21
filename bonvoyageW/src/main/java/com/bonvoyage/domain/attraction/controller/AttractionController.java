@@ -1,5 +1,6 @@
 package com.bonvoyage.domain.attraction.controller;
 
+import com.bonvoyage.domain.attraction.dto.AttractionDetailPageInfoDto;
 import com.bonvoyage.domain.attraction.dto.AttractionInfoDto;
 import com.bonvoyage.domain.attraction.service.AttractionService;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +23,7 @@ public class AttractionController {
     }
 
     @GetMapping("/{contentId}")
-    public ResponseEntity<AttractionInfoDto> findByContentId(@PathVariable("contentId") long contentId) {
+    public ResponseEntity<?> findByContentId(@PathVariable("contentId") Long contentId) {
         return ResponseEntity.status(HttpStatus.OK).body(attractionService.findByContentId(contentId));
     }
 
