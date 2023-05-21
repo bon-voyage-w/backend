@@ -23,7 +23,7 @@ public class AttractionController {
     }
 
     @GetMapping("/{contentId}")
-    public ResponseEntity<?> findByContentId(@PathVariable("contentId") Long contentId) {
+    public ResponseEntity<AttractionDetailPageInfoDto> findByContentId(@PathVariable("contentId") Long contentId) {
         return ResponseEntity.status(HttpStatus.OK).body(attractionService.findByContentId(contentId));
     }
 
