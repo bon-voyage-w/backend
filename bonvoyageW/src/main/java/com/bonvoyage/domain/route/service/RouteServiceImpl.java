@@ -11,6 +11,7 @@ import com.bonvoyage.domain.user.repository.UserRepository;
 import com.bonvoyage.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.RouteMatcher;
 
 import java.util.ArrayList;
@@ -18,6 +19,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class RouteServiceImpl implements RouteService {
     private final RouteRepository routeRepository;

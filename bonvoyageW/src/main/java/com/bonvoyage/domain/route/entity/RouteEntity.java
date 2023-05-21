@@ -4,6 +4,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -22,6 +23,7 @@ public class RouteEntity {
     private int totalDays;
     private int userId;
     private String routeTitle;
+    @CreationTimestamp
     private LocalDateTime createdTime;
 
 
