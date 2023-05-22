@@ -147,4 +147,14 @@ public class UserServiceImpl implements UserService {
         UserEntity userEntity=userRepository.findByLoginId(loginId).orElseThrow(NoSuchElementException::new);
         return Math.toIntExact(userEntity.getUserId());
     }
+
+    @Override
+    public Map<String, String> getLoginIdAndNameByUserId(int userId) {
+        UserEntity userEntity=userRepository.findById((long)userId).orElseThrow(NoSuchElementException::new);
+        Map<String, String> userLoginIdAndName=new HashMap<>();
+        userLoginIdAndName.put("loginId",userEntity.getLoginId());
+        userLoginIdAndName.put("name",userEntity.getName());
+        return userLoginIdAndName;
+    }
+
 }

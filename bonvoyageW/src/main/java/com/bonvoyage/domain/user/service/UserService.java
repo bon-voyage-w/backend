@@ -27,4 +27,5 @@ public interface UserService {
     boolean withdrawalUser(int userId);
 
     int getUserIdByLoginId(String id);
+    Map<String,String> getLoginIdAndNameByUserId(int userId);
 }
