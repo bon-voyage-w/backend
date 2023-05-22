@@ -17,7 +17,7 @@ public class ReviewDto {
     private String reviewContent;
     private Date writeDate;
     private String location;
-    private Long userId;
+    private int userId;
     private Long contentId;
 
 }
