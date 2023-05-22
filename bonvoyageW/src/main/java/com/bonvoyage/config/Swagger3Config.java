@@ -29,4 +29,13 @@ public class Swagger3Config {
                 .packagesToScan("com.bonvoyage.domain")
                 .build();
     }
+
+    @Bean//domain별로 작성하기!
+    public GroupedOpenApi shareBoard(){
+        return GroupedOpenApi.builder()
+                .group("공유게시판")
+                .pathsToMatch("/share-board/**")
+                .packagesToScan("com.bonvoyage.domain")
+                .build();
+    }
 }
