@@ -69,11 +69,11 @@ public class UserController {
     public ResponseEntity<?> userLogin(@RequestBody Map<String, String> loginInfo){
         try{
 
-        if(userService.isAuthAvail(loginInfo)){
+        if(!userService.isAuthAvail(loginInfo)){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("잘못된 아이디 입니다");
         }
         }catch (Exception e){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("잘못된 비밀번호 입니다");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
         int userId=userService.getUserIdByLoginId(loginInfo.get("id"));
         Map<String,String> token=userService.setTokenInfo(userId);
