@@ -36,7 +36,9 @@ public class AttractionServiceImpl implements AttractionService {
     }
 
     @Override
-    public List<AttractionInfoDto> findSearch(String keyword, int sidoCode, int gugunCode, Long contentTypeId) {
+    public List<AttractionInfoDto> findSearch(String keyword, int sidoCode, int gugunCode, int contentTypeId) {
+        Long contentCategoryId = new Long(contentTypeId);
+
 //        1. 조건 생성
 //          1-1. 검색어 존재 여부
         Specification<AttractionInfoEntity> spec = (root, query, criteriaBuilder) -> null;
@@ -51,9 +53,9 @@ public class AttractionServiceImpl implements AttractionService {
             }
         }
 //        1-3. 분류
-        if(contentTypeId != null) {
-
-        }
+//        if(contentCategoryId != null) {
+//
+//        }
 
 //        2. 조건 적용
         List<AttractionInfoEntity> entityList = attractionInfoRepository.findAll(spec);

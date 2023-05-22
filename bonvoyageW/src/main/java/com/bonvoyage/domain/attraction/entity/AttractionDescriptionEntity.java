@@ -15,7 +15,7 @@ import javax.persistence.*;
 public class AttractionDescriptionEntity {
 
     @Id
-    private long contentId;
+    private Long contentId;
     private String homepage;
     private String overview;
     private String telname;
@@ -26,7 +26,7 @@ public class AttractionDescriptionEntity {
     private AttractionInfoEntity attractionInfoEntity;
 
     @Builder
-    public AttractionDescriptionEntity(long contentId, String homepage, String overview, String telname) {
+    public AttractionDescriptionEntity(Long contentId, String homepage, String overview, String telname) {
         this.contentId = contentId;
         this.homepage = homepage;
         this.overview = overview;

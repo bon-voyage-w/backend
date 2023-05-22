@@ -40,7 +40,10 @@ public class AttractionController {
     @Parameter(name = "gugunCode", description = "구군 고유 번호")
     @Parameter(name = "contentTypeId", description = "관광지 분류 번호")
     @GetMapping("/search")
-    public ResponseEntity<List<AttractionInfoDto>> searchByParams(@RequestParam String keyword, @RequestParam int sidoCode, @RequestParam int gugunCode, @RequestParam Long contentTypeId) {
+    public ResponseEntity<List<AttractionInfoDto>> searchByParams(@RequestParam(required = false) String keyword,
+                                                                  @RequestParam(required = false, defaultValue="0") int sidoCode,
+                                                                  @RequestParam(required = false, defaultValue="0") int gugunCode,
+                                                                  @RequestParam(required = false, defaultValue="0") int contentTypeId) {
         return ResponseEntity.status(HttpStatus.OK).body(attractionService.findSearch(keyword, sidoCode, gugunCode, contentTypeId));
     }
 

@@ -14,7 +14,7 @@ public class AttractionInfoEntity {
     @Id
     private Long contentId;
 
-    private Long contentTypeId;
+    private int contentTypeId;
     private String title;
     private String addr1;
     private String addr2;
@@ -30,7 +30,7 @@ public class AttractionInfoEntity {
     private String mlevel;
 
     @Builder
-    public AttractionInfoEntity(Long contentId, Long contentTypeId, String title, String addr1, String addr2, String zipcode, String tel, String firstImage, String firstImage2, int readcount, int sidoCode, int gugunCode, double latitude, double longitude, String mlevel) {
+    public AttractionInfoEntity(Long contentId, int contentTypeId, String title, String addr1, String addr2, String zipcode, String tel, String firstImage, String firstImage2, int readcount, int sidoCode, int gugunCode, double latitude, double longitude, String mlevel) {
         this.contentId = contentId;
         this.contentTypeId = contentTypeId;
         this.title = title;

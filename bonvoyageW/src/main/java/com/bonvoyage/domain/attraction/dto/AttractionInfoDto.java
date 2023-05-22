@@ -16,9 +16,9 @@ public class AttractionInfoDto {
 
     @Schema(description = "관광지 고유 번호", required = true)
 //    @NotBlank
-    private long contentId;
+    private Long contentId;
     @Schema(description = "관광지 분류 번호", required = true)
-    private long contentTypeId;
+    private int contentTypeId;
     @Schema(description = "관광지 이름", required = true)
     private String title;
     @Schema(description = "관광지 주소", required = true)

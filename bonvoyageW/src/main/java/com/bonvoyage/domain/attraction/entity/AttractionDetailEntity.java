@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 public class AttractionDetailEntity {
 
     @Id
-    private long contentId;
+    private Long contentId;
     private String cat1;
     private String cat2;
     private String cat3;
@@ -24,7 +24,7 @@ public class AttractionDetailEntity {
     private LocalDateTime modified_time;
     private String booktour;
 
-    public AttractionDetailEntity(long contentId, String cat1, String cat2, String cat3, LocalDateTime created_time, LocalDateTime modified_time, String booktour) {
+    public AttractionDetailEntity(Long contentId, String cat1, String cat2, String cat3, LocalDateTime created_time, LocalDateTime modified_time, String booktour) {
         this.contentId = contentId;
         this.cat1 = cat1;
         this.cat2 = cat2;
