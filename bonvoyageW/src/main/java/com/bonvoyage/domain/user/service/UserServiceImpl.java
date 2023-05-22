@@ -157,4 +157,18 @@ public class UserServiceImpl implements UserService {
         return userLoginIdAndName;
     }
 
+    @Override
+    public UserDto findUserByUserId(int userId) {
+        UserEntity userEntity= userRepository.findById((long)userId).orElseThrow(NoSuchElementException::new);
+        UserDto userDto =UserDto.builder()
+                .email(userEntity.getEmail())
+                .loginId(userEntity.getLoginId())
+                .ageRange(userEntity.getAgeRange())
+                .authorization(userEntity.isAuthorization())
+                .profileImg(userEntity.getProfileImg())
+                .name(userEntity.getName())
+                .build();
+        return userDto;
+    }
+
 }

@@ -18,7 +18,7 @@ public class UserController {
 
     private final UserService userService;
     private final JWTService jwtService;
-    @GetMapping("")
+    @GetMapping("/test")
     public ResponseEntity<?> userList(){
         try {
             List<UserDto> list = userService.findUserList();
@@ -31,6 +31,15 @@ public class UserController {
         } catch (Exception e) {
             return exceptionHandling(e);
         }
+    }
+    @GetMapping("")
+    public ResponseEntity<?> userDetailByToken(@RequestHeader("Authorization") String accessToken){
+        if(jwtService.checkToken(accessToken)){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("인증되지 않은 사용자입니다");
+        }
+        int userId=jwtService.getUserId(accessToken);
+        UserDto userDto= userService.findUserByUserId(userId);
+        return ResponseEntity.status(HttpStatus.OK).body(userDto);
     }
     @PostMapping("")
     public ResponseEntity<?> userRegister(UserDto userDto){

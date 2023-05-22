@@ -28,4 +28,6 @@ public interface UserService {
 
     int getUserIdByLoginId(String id);
     Map<String,String> getLoginIdAndNameByUserId(int userId);
+
+    UserDto findUserByUserId(int userId);
 }
