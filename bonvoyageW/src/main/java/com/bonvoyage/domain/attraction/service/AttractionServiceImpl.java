@@ -87,7 +87,7 @@ public class AttractionServiceImpl implements AttractionService {
 
     @Override
     public List<GugunDto> getGugunList(Long sidoCode) {
-        List<GugunEntity> gugunEntities = gugunRepository.findBySidoCode(sidoCode);
+        List<GugunEntity> gugunEntities = gugunRepository.findBySidoEntity_SidoCode(sidoCode);
         List<GugunDto> result = new ArrayList<>();
 
         for(GugunEntity gugunEntity : gugunEntities) {
