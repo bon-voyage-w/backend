@@ -124,7 +124,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean isAuthAvail(Map<String, String> loginInfo) throws Exception {
+
         String loginId=loginInfo.get("id");
+        System.out.println(loginId);
         UserEntity userEntity=userRepository.findByLoginId(loginId).orElseThrow(NoSuchElementException::new);
         if(userEntity.getPw().equals(loginInfo.get("pw"))){
             return true;
