@@ -2,15 +2,16 @@ package com.bonvoyage.domain.attraction.service;
 
 import com.bonvoyage.domain.attraction.dto.AttractionDetailPageInfoDto;
 import com.bonvoyage.domain.attraction.dto.AttractionInfoDto;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
 public interface AttractionService {
 
-    List<AttractionInfoDto> getAttractionList();
+    Page<AttractionInfoDto> getAttractionList();
     AttractionDetailPageInfoDto findByContentId(Long contentId);
 
 //    List<AttractionInfoDto> findByTitle(String title);
-    List<AttractionInfoDto> findSearch(String keyword, int sidoCode, int gugunCode, int contentTypeId);
+    Page<AttractionInfoDto> findSearch(String keyword, int sidoCode, int gugunCode, int contentTypeId);
 
 }

@@ -23,7 +23,7 @@ public class AttractionController {
     
     @Operation(summary = "getAttractionList", description = "관광지 전체 리스트 가져오기")
     @GetMapping("")
-    public ResponseEntity<List<AttractionInfoDto>> getAttractionList() {
+    public ResponseEntity<?> getAttractionList() {
         return ResponseEntity.status(HttpStatus.OK).body(attractionService.getAttractionList());
     }
 
@@ -40,7 +40,7 @@ public class AttractionController {
     @Parameter(name = "gugunCode", description = "구군 고유 번호")
     @Parameter(name = "contentTypeId", description = "관광지 분류 번호")
     @GetMapping("/search")
-    public ResponseEntity<List<AttractionInfoDto>> searchByParams(@RequestParam(required = false) String keyword,
+    public ResponseEntity<?> searchByParams(@RequestParam(required = false) String keyword,
                                                                   @RequestParam(required = false, defaultValue="0") int sidoCode,
                                                                   @RequestParam(required = false, defaultValue="0") int gugunCode,
                                                                   @RequestParam(required = false, defaultValue="0") int contentTypeId) {
