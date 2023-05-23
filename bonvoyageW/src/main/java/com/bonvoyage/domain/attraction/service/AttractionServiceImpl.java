@@ -44,11 +44,11 @@ public class AttractionServiceImpl implements AttractionService {
     @Override
     public Page<AttractionInfoDto> findSearch(String keyword, int sidoCode, int gugunCode, int contentTypeId) {
         Long contentCategoryId = new Long(contentTypeId);
-
 //        1. 조건 생성
 //          1-1. 검색어 존재 여부
         Specification<AttractionInfoEntity> spec = (root, query, criteriaBuilder) -> null;
         if (keyword != null) {
+//            String trimKeyword = keyword.trim();
             spec = spec.and(AttractionSpecification.containingTitle(keyword));
         }
 //          1-2. 시도, 구군
@@ -59,9 +59,9 @@ public class AttractionServiceImpl implements AttractionService {
             spec = spec.and(AttractionSpecification.equalGugun(gugunCode));
         }
 //        1-3. 분류
-//        if(contentCategoryId != null) {
-//
-//        }
+        if(contentCategoryId != 0) {
+            spec = spec.and(AttractionSpecification.equalContentTypeId(contentCategoryId));
+        }
 
 //        2. 조건 적용
         Pageable page = PageRequest.of(0, 6, Sort.Direction.DESC, "contentId");
