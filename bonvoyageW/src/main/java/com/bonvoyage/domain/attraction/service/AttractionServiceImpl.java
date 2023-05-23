@@ -2,7 +2,7 @@ package com.bonvoyage.domain.attraction.service;
 
 import com.bonvoyage.domain.attraction.dto.AttractionDetailPageInfoDto;
 import com.bonvoyage.domain.attraction.dto.AttractionInfoDto;
-import com.bonvoyage.domain.attraction.dto.LocationDto;
+import com.bonvoyage.domain.attraction.dto.GugunDto;
 import com.bonvoyage.domain.attraction.dto.SidoDto;
 import com.bonvoyage.domain.attraction.entity.AttractionDescriptionEntity;
 import com.bonvoyage.domain.attraction.entity.AttractionInfoEntity;
@@ -11,6 +11,7 @@ import com.bonvoyage.domain.attraction.entity.SidoEntity;
 import com.bonvoyage.domain.attraction.repository.AttractionDescriptionRepository;
 import com.bonvoyage.domain.attraction.repository.AttractionInfoRepository;
 import com.bonvoyage.domain.attraction.repository.GugunRepository;
+import com.bonvoyage.domain.attraction.repository.SidoRepository;
 import com.bonvoyage.domain.attraction.specification.AttractionSpecification;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -30,6 +31,7 @@ public class AttractionServiceImpl implements AttractionService {
     private final AttractionInfoRepository attractionInfoRepository;
     private final AttractionDescriptionRepository attractionDescriptionRepository;
     private final GugunRepository gugunRepository;
+    private final SidoRepository sidoRepository;
 
     @Override
     public Page<AttractionInfoDto> getAttractionList() {
@@ -68,13 +70,33 @@ public class AttractionServiceImpl implements AttractionService {
     }
 
     @Override
-    public List<LocationDto> getLocationList() {
-        List<GugunEntity> gugunEntities = gugunRepository.findAll();
-        List<LocationDto> result = new ArrayList<>();
+    public List<SidoDto> getSidoList() {
+        List<SidoEntity> sidoEntities = sidoRepository.findAll();
+        List<SidoDto> result = new ArrayList<>();
 
-        for(GugunEntity entity : gugunEntities) {
-            LocationDto locationDto = locationEntityToDto(entity);
-            result.add(locationDto);
+        for (SidoEntity sidoEntity : sidoEntities) {
+            SidoDto sidoDto = SidoDto.builder()
+                    .sidoCode(sidoEntity.getSidoCode())
+                    .sidoName(sidoEntity.getSidoName())
+                    .build();
+            result.add(sidoDto);
+        }
+
+        return result;
+    }
+
+    @Override
+    public List<GugunDto> getGugunList() {
+        List<GugunEntity> gugunEntities = gugunRepository.findAll();
+        List<GugunDto> result = new ArrayList<>();
+
+        for(GugunEntity gugunEntity : gugunEntities) {
+            GugunDto gugunDto = GugunDto.builder()
+                    .gugunCode(gugunEntity.getGugunCode())
+                    .gugunName(gugunEntity.getGugunName())
+                    .sidoCode(gugunEntity.getSidoEntity().getSidoCode())
+                    .build();
+            result.add(gugunDto);
         }
         return result;
     }
@@ -123,22 +145,4 @@ public class AttractionServiceImpl implements AttractionService {
 
         return attractionInfoDto;
     }
-
-    public LocationDto locationEntityToDto(GugunEntity gugunEntity) {
-        SidoEntity tmpSidoEntity = gugunEntity.getSidoEntity();
-
-      LocationDto locationDto = LocationDto.builder()
-              .sidoDto(
-                      SidoDto.builder()
-                              .sidoCode(gugunEntity.getSidoEntity().getSidoCode())
-                              .sidoName(gugunEntity.getSidoEntity().getSidoName())
-                              .build()
-              )
-              .gugunCode(gugunEntity.getGugunCode())
-              .gugunName(gugunEntity.getGugunName())
-              .build();
-
-        return locationDto;
-    }
-
 }
