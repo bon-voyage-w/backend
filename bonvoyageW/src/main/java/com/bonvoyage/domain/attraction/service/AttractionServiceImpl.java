@@ -48,8 +48,8 @@ public class AttractionServiceImpl implements AttractionService {
 //          1-1. 검색어 존재 여부
         Specification<AttractionInfoEntity> spec = (root, query, criteriaBuilder) -> null;
         if (keyword != null) {
-//            String trimKeyword = keyword.trim();
-            spec = spec.and(AttractionSpecification.containingTitle(keyword));
+            String trimKeyword = keyword.trim();
+            spec = spec.and(AttractionSpecification.containingTitle(trimKeyword));
         }
 //          1-2. 시도, 구군
         if (sidoCode > 0) {
