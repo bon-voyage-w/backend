@@ -11,12 +11,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class LocationDto {
-    @Schema(description = "관광지 고유 번호", required = true)
-    private int sidoCode;
-    @Schema(description = "관광지 고유 번호", required = true)
-    private int gugunCode;
-    @Schema(description = "시도 이름", required = true)
-    private int sidoName;
+    @Schema(description = "구군 번호", required = true)
+    private Long gugunCode;
     @Schema(description = "구군 이름", required = true)
-    private int gugunName;
+    private String gugunName;
+    @Schema(description = "시도 정보", required = true)
+    private SidoDto sidoDto;
 }

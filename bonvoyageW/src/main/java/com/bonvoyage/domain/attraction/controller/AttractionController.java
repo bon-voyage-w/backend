@@ -47,4 +47,9 @@ public class AttractionController {
         return ResponseEntity.status(HttpStatus.OK).body(attractionService.findSearch(keyword, sidoCode, gugunCode, contentTypeId));
     }
 
+    @GetMapping("/search")
+    public ResponseEntity<?> getLocation() {
+        return ResponseEntity.status(HttpStatus.OK).body(attractionService.getLocationList());
+    }
+
 }

@@ -2,10 +2,15 @@ package com.bonvoyage.domain.attraction.service;
 
 import com.bonvoyage.domain.attraction.dto.AttractionDetailPageInfoDto;
 import com.bonvoyage.domain.attraction.dto.AttractionInfoDto;
+import com.bonvoyage.domain.attraction.dto.LocationDto;
+import com.bonvoyage.domain.attraction.dto.SidoDto;
 import com.bonvoyage.domain.attraction.entity.AttractionDescriptionEntity;
 import com.bonvoyage.domain.attraction.entity.AttractionInfoEntity;
+import com.bonvoyage.domain.attraction.entity.GugunEntity;
+import com.bonvoyage.domain.attraction.entity.SidoEntity;
 import com.bonvoyage.domain.attraction.repository.AttractionDescriptionRepository;
 import com.bonvoyage.domain.attraction.repository.AttractionInfoRepository;
+import com.bonvoyage.domain.attraction.repository.GugunRepository;
 import com.bonvoyage.domain.attraction.specification.AttractionSpecification;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -24,6 +29,7 @@ public class AttractionServiceImpl implements AttractionService {
 
     private final AttractionInfoRepository attractionInfoRepository;
     private final AttractionDescriptionRepository attractionDescriptionRepository;
+    private final GugunRepository gugunRepository;
 
     @Override
     public Page<AttractionInfoDto> getAttractionList() {
@@ -59,6 +65,18 @@ public class AttractionServiceImpl implements AttractionService {
         Pageable page = PageRequest.of(0, 6, Sort.Direction.DESC, "contentId");
         Page<AttractionInfoEntity> entityList = attractionInfoRepository.findAll(spec, page);
         return toDtoList(entityList);
+    }
+
+    @Override
+    public List<LocationDto> getLocationList() {
+        List<GugunEntity> gugunEntities = gugunRepository.findAll();
+        List<LocationDto> result = new ArrayList<>();
+
+        for(GugunEntity entity : gugunEntities) {
+            LocationDto locationDto = locationEntityToDto(entity);
+            result.add(locationDto);
+        }
+        return result;
     }
 
     @Override
@@ -104,6 +122,23 @@ public class AttractionServiceImpl implements AttractionService {
                 .build();
 
         return attractionInfoDto;
+    }
+
+    public LocationDto locationEntityToDto(GugunEntity gugunEntity) {
+        SidoEntity tmpSidoEntity = gugunEntity.getSidoEntity();
+
+      LocationDto locationDto = LocationDto.builder()
+              .sidoDto(
+                      SidoDto.builder()
+                              .sidoCode(gugunEntity.getSidoEntity().getSidoCode())
+                              .sidoName(gugunEntity.getSidoEntity().getSidoName())
+                              .build()
+              )
+              .gugunCode(gugunEntity.getGugunCode())
+              .gugunName(gugunEntity.getGugunName())
+              .build();
+
+        return locationDto;
     }
 
 }
