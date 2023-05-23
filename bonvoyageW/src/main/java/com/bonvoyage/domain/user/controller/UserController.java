@@ -90,8 +90,12 @@ public class UserController {
     }
 
     @GetMapping("/auth")
-    public ResponseEntity<?> userLogout(){
-
+    public ResponseEntity<?> userLogout(@RequestHeader("Authorization") String accessToken){
+        if(jwtService.checkToken(accessToken)){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("인증되지 않은 사용자입니다");
+        }
+        int userId=jwtService.getUserId(accessToken);
+        userService.removeUserRefreshToken(userId);
         return ResponseEntity.status(HttpStatus.OK).body(null);
     }
 

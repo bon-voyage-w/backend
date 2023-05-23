@@ -171,4 +171,10 @@ public class UserServiceImpl implements UserService {
         return userDto;
     }
 
+    @Override
+    public void removeUserRefreshToken(int userId) {
+        UserEntity userEntity= userRepository.findById((long)userId).orElseThrow(NoSuchElementException::new);
+        userEntity.setRefreshToken(null);
+    }
+
 }

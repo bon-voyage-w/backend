@@ -30,4 +30,6 @@ public interface UserService {
     Map<String,String> getLoginIdAndNameByUserId(int userId);
 
     UserDto findUserByUserId(int userId);
+
+    void removeUserRefreshToken(int userId);
 }
