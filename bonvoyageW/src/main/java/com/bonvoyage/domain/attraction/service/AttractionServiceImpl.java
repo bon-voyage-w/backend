@@ -54,9 +54,9 @@ public class AttractionServiceImpl implements AttractionService {
 //          1-2. 시도, 구군
         if (sidoCode > 0) {
             spec = spec.and(AttractionSpecification.equalSido(sidoCode));
-            if (gugunCode > 0) {
-                spec = spec.and(AttractionSpecification.equalGugun(gugunCode));
-            }
+        }
+        if (gugunCode > 0) {
+            spec = spec.and(AttractionSpecification.equalGugun(gugunCode));
         }
 //        1-3. 분류
 //        if(contentCategoryId != null) {
