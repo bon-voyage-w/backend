@@ -52,8 +52,8 @@ public class AttractionController {
         return ResponseEntity.status(HttpStatus.OK).body(attractionService.getSidoList());
     }
     @GetMapping("/gugun-info")
-    public ResponseEntity<?> geGugunList() {
-        return ResponseEntity.status(HttpStatus.OK).body(attractionService.getGugunList());
+    public ResponseEntity<?> geGugunList(@RequestParam Long sidoCode) {
+        return ResponseEntity.status(HttpStatus.OK).body(attractionService.getGugunList(sidoCode));
     }
 
 }

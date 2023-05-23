@@ -16,5 +16,5 @@ public interface AttractionService {
 //    List<AttractionInfoDto> findByTitle(String title);
     Page<AttractionInfoDto> findSearch(String keyword, int sidoCode, int gugunCode, int contentTypeId);
     List<SidoDto> getSidoList();
-    List<GugunDto> getGugunList();
+    List<GugunDto> getGugunList(Long sidoCode);
 }

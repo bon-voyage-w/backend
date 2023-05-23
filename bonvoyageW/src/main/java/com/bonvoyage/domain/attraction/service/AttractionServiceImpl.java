@@ -86,8 +86,8 @@ public class AttractionServiceImpl implements AttractionService {
     }
 
     @Override
-    public List<GugunDto> getGugunList() {
-        List<GugunEntity> gugunEntities = gugunRepository.findAll();
+    public List<GugunDto> getGugunList(Long sidoCode) {
+        List<GugunEntity> gugunEntities = gugunRepository.findBySidoCode(sidoCode);
         List<GugunDto> result = new ArrayList<>();
 
         for(GugunEntity gugunEntity : gugunEntities) {
@@ -96,6 +96,7 @@ public class AttractionServiceImpl implements AttractionService {
                     .gugunName(gugunEntity.getGugunName())
                     .sidoCode(gugunEntity.getSidoEntity().getSidoCode())
                     .build();
+            System.out.println("@@@@@@@@@@@@@@@@@@@ " + gugunDto.getGugunName());
             result.add(gugunDto);
         }
         return result;
