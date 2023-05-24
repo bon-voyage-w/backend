@@ -1,5 +1,6 @@
 package com.bonvoyage.domain.user.controller;
 
+import com.bonvoyage.domain.review.service.ReviewService;
 import com.bonvoyage.domain.user.dto.UserDto;
 import com.bonvoyage.domain.user.service.JWTService;
 import com.bonvoyage.domain.user.service.UserService;
@@ -18,6 +19,7 @@ public class UserController {
 
     private final UserService userService;
     private final JWTService jwtService;
+    private final ReviewService reviewService;
     @GetMapping("/test")
     public ResponseEntity<?> userList(){
         try {
@@ -115,7 +117,8 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(null);
     }
     @GetMapping("/reviews")
-    public ResponseEntity<?> userReviewList(){
+    public ResponseEntity<?> userReviewList(@RequestHeader("Authorization") String accessToken){
+
         return ResponseEntity.status(HttpStatus.OK).body(null);
     }
     @GetMapping("/share-boards")
