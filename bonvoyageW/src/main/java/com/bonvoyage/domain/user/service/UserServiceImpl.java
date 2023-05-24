@@ -124,7 +124,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean isAuthAvail(Map<String, String> loginInfo) throws Exception {
+
         String loginId=loginInfo.get("id");
+        System.out.println(loginId);
         UserEntity userEntity=userRepository.findByLoginId(loginId).orElseThrow(NoSuchElementException::new);
         if(userEntity.getPw().equals(loginInfo.get("pw"))){
             return true;
@@ -147,4 +149,40 @@ public class UserServiceImpl implements UserService {
         UserEntity userEntity=userRepository.findByLoginId(loginId).orElseThrow(NoSuchElementException::new);
         return Math.toIntExact(userEntity.getUserId());
     }
+
+    @Override
+    public Map<String, String> getLoginIdAndNameByUserId(int userId) {
+        UserEntity userEntity=userRepository.findById((long)userId).orElseThrow(NoSuchElementException::new);
+        Map<String, String> userLoginIdAndName=new HashMap<>();
+        userLoginIdAndName.put("loginId",userEntity.getLoginId());
+        userLoginIdAndName.put("name",userEntity.getName());
+        return userLoginIdAndName;
+    }
+
+    @Override
+    public UserDto findUserByUserId(int userId) {
+        UserEntity userEntity= userRepository.findById((long)userId).orElseThrow(NoSuchElementException::new);
+        UserDto userDto =UserDto.builder()
+                .email(userEntity.getEmail())
+                .loginId(userEntity.getLoginId())
+                .ageRange(userEntity.getAgeRange())
+                .authorization(userEntity.isAuthorization())
+                .profileImg(userEntity.getProfileImg())
+                .name(userEntity.getName())
+                .build();
+        return userDto;
+    }
+
+    @Override
+    public void removeUserRefreshToken(int userId) {
+        UserEntity userEntity= userRepository.findById((long)userId).orElseThrow(NoSuchElementException::new);
+        userEntity.setRefreshToken(null);
+    }
+
+    @Override
+    public boolean isAuthorizedAdmin(int userId) {
+        UserEntity userEntity= userRepository.findById((long)userId).orElseThrow(NoSuchElementException::new);
+        return userEntity.isAuthorization();
+    }
+
 }

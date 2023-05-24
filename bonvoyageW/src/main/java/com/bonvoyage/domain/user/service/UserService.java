@@ -27,4 +27,10 @@ public interface UserService {
     boolean withdrawalUser(int userId);
 
     int getUserIdByLoginId(String id);
+    Map<String,String> getLoginIdAndNameByUserId(int userId);
+
+    UserDto findUserByUserId(int userId);
+
+    void removeUserRefreshToken(int userId);
+    boolean isAuthorizedAdmin(int userId);
 }

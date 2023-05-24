@@ -34,36 +34,39 @@ public class OAuthController {
     public String login() {
         return "loginForm";
     }
+
     @Value("${kakao.client.id}")
     private String clientId;
 
     @Value("${kakao.client.secret}")
     private String clientSecret;
-    @GetMapping("/kakao/callback")
+
+    @GetMapping("/kakao")
     public @ResponseBody ResponseEntity<?> kakaoLoginCallback(String code) {
+
         String contentType = "application/x-www-form-urlencoded;charset=utf-8";
         KakaoTokenDto.Request kakaoTokenRequestDto = KakaoTokenDto.Request.builder()
                 .client_id(clientId)
                 .client_secret(clientSecret)
                 .grant_type("authorization_code")
                 .code(code)
-                .redirect_uri("http://localhost:8085/oauth/kakao/callback")
+                .redirect_uri("http://localhost:8080/oauth/kakao/callback")
                 .build();
         KakaoTokenDto.Response kakaoToken = kakaoTokenClient.requestKakaoToken(contentType, kakaoTokenRequestDto);
-        KakaoUserInfoDto userInfoDto=kakaoApiClient.requestKakaoUserInfo("Bearer "+kakaoToken.getAccess_token());
+        System.out.println(kakaoToken);
+        KakaoUserInfoDto userInfoDto = kakaoApiClient.requestKakaoUserInfo("Bearer " + kakaoToken.getAccess_token());
 
         int userId;
-        Map<String, String> token= new HashMap<>();
-        if(!userService.isRegisterUser(userInfoDto.getId())){
-            userId=userService.registerUser(userInfoDto);
-            userService.registerOauthInfo(userId, userInfoDto.getId(),kakaoToken, OAuthInfoEntity.OAuth2.kakao);
-            token=userService.setTokenInfo(userId);
-        }
-        else{
-            try{
-            userId=userService.getUserIdByOauth(userInfoDto);
-            token=userService.setTokenInfo(userId);}
-            catch (Exception e){
+        Map<String, String> token = new HashMap<>();
+        if (!userService.isRegisterUser(userInfoDto.getId())) {
+            userId = userService.registerUser(userInfoDto);
+            userService.registerOauthInfo(userId, userInfoDto.getId(), kakaoToken, OAuthInfoEntity.OAuth2.kakao);
+            token = userService.setTokenInfo(userId);
+        } else {
+            try {
+                userId = userService.getUserIdByOauth(userInfoDto);
+                token = userService.setTokenInfo(userId);
+            } catch (Exception e) {
                 e.printStackTrace();
                 return ResponseEntity.noContent().build();
             }
