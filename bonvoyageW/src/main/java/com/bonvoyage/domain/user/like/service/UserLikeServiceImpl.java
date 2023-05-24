@@ -21,7 +21,6 @@ public class UserLikeServiceImpl implements UserLikeService{
     @Override
     public List<AttractionInfoDto> findUserLikeAttraction(int userId) {
         List<UserLikeEntiry> userLikeEntiryList= userLikeRepository.findByUserId(1);
-        System.out.println(userLikeRepository.getContentIdByUserId(1));
         List<AttractionInfoDto> attractionInfoDtoList = new ArrayList<>();
         for(UserLikeEntiry userLikeEntiry: userLikeEntiryList){
             attractionInfoDtoList.add(attractionService.findAttractionByContentId((long)userLikeEntiry.getContentId()));
