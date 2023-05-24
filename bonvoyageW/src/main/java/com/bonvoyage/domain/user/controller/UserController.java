@@ -105,7 +105,11 @@ public class UserController {
 
 
     @GetMapping("/like")
-    public ResponseEntity<?> userLikeList(){
+    public ResponseEntity<?> userLikeList(@RequestHeader("Authorization") String accessToken){
+        if(jwtService.isUnavailToken(accessToken)){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("인증되지 않은 사용자입니다");
+        }
+        int userId=jwtService.getUserId(accessToken);
 
         return ResponseEntity.status(HttpStatus.OK).body(null);
     }
@@ -115,6 +119,7 @@ public class UserController {
     }
     @DeleteMapping("/like/{id}")
     public ResponseEntity<?> userLikeDelete(@PathVariable(value = "id") int likeId){
+
         return ResponseEntity.status(HttpStatus.OK).body(null);
     }
     @GetMapping("/reviews")
