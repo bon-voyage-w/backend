@@ -34,3 +34,21 @@ spring:
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
+kakao:
+  client:
+    id: ${KAKAO_ID}
+    secret: ${KAKAO_SECRET}
+
+jwt:
+  salt: ${JWT_SALT}
+
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 5000
+        readTimeout: 5000
+logging:
+  level:
+    com.bonvoyage: info
+

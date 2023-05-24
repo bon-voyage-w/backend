@@ -21,11 +21,36 @@ public class Swagger3Config {
                 .info(info);
     }
 
+    @Bean//domain별로 작성하기!
+    public GroupedOpenApi user(){
+        return GroupedOpenApi.builder()
+                .group("user")
+                .pathsToMatch("/users/**")
+                .packagesToScan("com.bonvoyage.domain")
+                .build();
+    }
     @Bean//notice
     public GroupedOpenApi notice(){
         return GroupedOpenApi.builder()
                 .group("notice")
                 .pathsToMatch("/notices/**")
+                .packagesToScan("com.bonvoyage.domain")
+                .build();
+    }
+    @Bean//domain별로 작성하기!
+    public GroupedOpenApi attraction(){
+        return GroupedOpenApi.builder()
+                .group("attraction")
+                .pathsToMatch("/attractions/**")
+                .packagesToScan("com.bonvoyage.domain")
+                .build();
+    }
+
+    @Bean//domain별로 작성하기!
+    public GroupedOpenApi route(){
+        return GroupedOpenApi.builder()
+                .group("경로")
+                .pathsToMatch("/routes/**")
                 .packagesToScan("com.bonvoyage.domain")
                 .build();
     }
