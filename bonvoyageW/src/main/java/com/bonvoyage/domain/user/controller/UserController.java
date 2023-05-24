@@ -1,5 +1,6 @@
 package com.bonvoyage.domain.user.controller;
 
+import com.bonvoyage.domain.review.dto.ReviewDto;
 import com.bonvoyage.domain.review.service.ReviewService;
 import com.bonvoyage.domain.user.dto.UserDto;
 import com.bonvoyage.domain.user.service.JWTService;
@@ -118,8 +119,12 @@ public class UserController {
     }
     @GetMapping("/reviews")
     public ResponseEntity<?> userReviewList(@RequestHeader("Authorization") String accessToken){
-
-        return ResponseEntity.status(HttpStatus.OK).body(null);
+        if(jwtService.isUnavailToken(accessToken)){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("인증되지 않은 사용자입니다");
+        }
+        int userId=jwtService.getUserId(accessToken);
+        List<ReviewDto> reviewDtoList= reviewService.findReviewListByUserId(userId);
+        return ResponseEntity.status(HttpStatus.OK).body(reviewDtoList);
     }
     @GetMapping("/share-boards")
     public ResponseEntity<?> userShareBoardList(){
