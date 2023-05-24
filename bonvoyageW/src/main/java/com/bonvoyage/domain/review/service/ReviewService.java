@@ -11,4 +11,7 @@ public interface ReviewService {
     Long removeReview(Long reviewId);
 
     List<ReviewDto> getReviewList(Long contentId);
+    List<ReviewDto> findReviewListByLoginId(String loginId);
+    List<ReviewDto> findReviewListByUserId(int userId);
+
 }

@@ -59,6 +59,28 @@ public class ReviewServiceImpl implements ReviewService {
         return result;
     }
 
+    @Override
+    public List<ReviewDto> findReviewListByLoginId(String loginId) {
+        List<ReviewDto> result = new ArrayList<>();
+        List<ReviewEntity> entityList=reviewRepository.findByUserId(userService.getUserIdByLoginId(loginId));
+        for(ReviewEntity reviewEntity : entityList) {
+            ReviewDto reviewDto = entityToDto(reviewEntity);
+            result.add(reviewDto);
+        }
+        return result;
+    }
+
+    @Override
+    public List<ReviewDto> findReviewListByUserId(int userId) {
+        List<ReviewDto> result = new ArrayList<>();
+        List<ReviewEntity> entityList=reviewRepository.findByUserId(userId);
+        for(ReviewEntity reviewEntity : entityList) {
+            ReviewDto reviewDto = entityToDto(reviewEntity);
+            result.add(reviewDto);
+        }
+        return result;
+    }
+
     public ReviewDto entityToDto(ReviewEntity reviewEntity) {
         Map<String,String> userInfo =userService.getLoginIdAndNameByUserId(reviewEntity.getUserId());
         ReviewDto reviewDto = ReviewDto.builder()
