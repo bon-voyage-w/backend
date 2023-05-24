@@ -11,7 +11,9 @@ import java.util.List;
 public interface AttractionService {
 
     Page<AttractionInfoDto> getAttractionList(int pageNumber, int pageSize);
-    AttractionDetailPageInfoDto findByContentId(Long contentId);
+    AttractionDetailPageInfoDto findAttractionDetailByContentId(Long contentId);
+    AttractionInfoDto findAttractionByContentId(Long contentId);
+
 
 //    List<AttractionInfoDto> findByTitle(String title);
 Page<AttractionInfoDto> findSearch(String keyword, int sidoCode, int gugunCode, int contentTypeId, int pageNumber, int pageSize);
