@@ -29,7 +29,7 @@ public class JWTServiceImpl implements JWTService {
     @Value("${jwt.salt}")
     private String SALT;
 
-    private static final int ACCESS_TOKEN_EXPIRE_MINUTES = 15; // 분단위
+    private static final int ACCESS_TOKEN_EXPIRE_MINUTES = 60; // 분단위
     private static final int REFRESH_TOKEN_EXPIRE_MINUTES = 2; // 주단위
 
     @Override
@@ -98,24 +98,28 @@ public class JWTServiceImpl implements JWTService {
 
     //	전달 받은 토큰이 제대로 생성된것인지 확인 하고 문제가 있다면 UnauthorizedException을 발생.
     @Override
-    public boolean checkToken(String jwt) {
+    public boolean isUnavailToken(String jwt) {
+        if (Pattern.matches("^Bearer .*", jwt)) {
+            jwt = jwt.replaceAll("^Bearer( )*", "");}
         try {
+            System.out.println("읽히나");
 //			Json Web Signature? 서버에서 인증을 근거로 인증정보를 서버의 private key로 서명 한것을 토큰화 한것
 //			setSigningKey : JWS 서명 검증을 위한  secret key 세팅
 //			parseClaimsJws : 파싱하여 원본 jws 만들기
             Jws<Claims> claims = Jwts.parser().setSigningKey(this.generateKey()).parseClaimsJws(jwt);
 //			Claims 는 Map의 구현체 형태
             logger.debug("claims: {}", claims);
-            return true;
+            return false;
         } catch (Exception e) {
 //			if (logger.isInfoEnabled()) {
 //				e.printStackTrace();
 //			} else {
+            e.printStackTrace();
             logger.error(e.getMessage());
 //			}
 //			throw new UnauthorizedException();
 //			개발환경
-            return false;
+            return true;
         }
     }
 
