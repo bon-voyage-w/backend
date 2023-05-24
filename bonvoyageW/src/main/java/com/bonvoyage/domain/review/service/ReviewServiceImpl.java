@@ -3,12 +3,14 @@ package com.bonvoyage.domain.review.service;
 import com.bonvoyage.domain.review.dto.ReviewDto;
 import com.bonvoyage.domain.review.entity.ReviewEntity;
 import com.bonvoyage.domain.review.repository.ReviewRepository;
+import com.bonvoyage.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -16,6 +18,7 @@ import java.util.List;
 public class ReviewServiceImpl implements ReviewService {
 
     private final ReviewRepository reviewRepository;
+    private final UserService userService;
 
     @Override
     public Long addReview(ReviewDto reviewDto) {
@@ -57,13 +60,15 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     public ReviewDto entityToDto(ReviewEntity reviewEntity) {
+        Map<String,String> userInfo =userService.getLoginIdAndNameByUserId(reviewEntity.getUserId());
         ReviewDto reviewDto = ReviewDto.builder()
                 .reviewId(reviewEntity.getReviewId())
                 .reviewContent(reviewEntity.getReviewContent())
                 .contentId(reviewEntity.getContentId())
                 .writeDate(reviewEntity.getWriteDate())
                 .location(reviewEntity.getLocation())
-                .userId(reviewEntity.getUserId())
+                .writerLoginId(userInfo.get("loginId"))
+                .writerName(userInfo.get("name"))
                 .contentId(reviewEntity.getContentId())
                 .build();
         return reviewDto;
@@ -75,7 +80,7 @@ public class ReviewServiceImpl implements ReviewService {
                 .reviewContent(reviewDto.getReviewContent())
                 .writeDate(reviewDto.getWriteDate())
                 .location(reviewDto.getLocation())
-                .userId(reviewDto.getUserId())
+                .userId(userService.getUserIdByLoginId(reviewDto.getWriterLoginId()))
                 .contentId(reviewDto.getContentId())
                 .build();
         return reviewEntity;
