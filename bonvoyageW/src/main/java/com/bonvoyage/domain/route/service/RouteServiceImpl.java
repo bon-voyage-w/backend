@@ -100,6 +100,16 @@ public class RouteServiceImpl implements RouteService {
         return routeDtoList;
     }
 
+    @Override
+    public List<RouteDto> findRouteListByUserId(int userId) {
+        List<RouteEntity> routeEntityList=routeRepository.findByUserId(userId);
+        List<RouteDto> routeDtoList= new ArrayList<>();
+        for (RouteEntity routeEntity: routeEntityList) {
+            routeDtoList.add(this.routeEntityToRouteDto(routeEntity));
+        }
+        return routeDtoList;
+    }
+
     private RouteDto routeEntityToRouteDto(RouteEntity routeEntity){
         RouteDto routeDto= RouteDto.builder()
                 .routeId(Math.toIntExact(routeEntity.getRouteId()))

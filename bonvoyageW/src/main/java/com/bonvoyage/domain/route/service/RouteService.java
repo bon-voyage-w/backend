@@ -16,4 +16,5 @@ public interface RouteService {
     int modifyRoute(int userId,int routeId,RouteDto routeDto) throws SecurityException;
 
     List<RouteDto> findRouteListWithDetail();
+    List<RouteDto> findRouteListByUserId(int userId);
 }
