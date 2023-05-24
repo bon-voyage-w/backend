@@ -7,6 +7,8 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,8 +25,8 @@ public class AttractionController {
     
     @Operation(summary = "getAttractionList", description = "관광지 전체 리스트 가져오기")
     @GetMapping("")
-    public ResponseEntity<?> getAttractionList() {
-        return ResponseEntity.status(HttpStatus.OK).body(attractionService.getAttractionList());
+    public ResponseEntity<?> getAttractionList(@RequestParam("pageNumber") int pageNumber, @RequestParam("pageSize") int pageSize) {
+        return ResponseEntity.status(HttpStatus.OK).body(attractionService.getAttractionList(pageNumber, pageSize));
     }
 
     @Operation(summary = "findByContentId", description = "관광지 정보 상세보기")
@@ -43,8 +45,9 @@ public class AttractionController {
     public ResponseEntity<?> searchByParams(@RequestParam(required = false) String keyword,
                                                                   @RequestParam(required = false, defaultValue="0") int sidoCode,
                                                                   @RequestParam(required = false, defaultValue="0") int gugunCode,
-                                                                  @RequestParam(required = false, defaultValue="0") int contentTypeId) {
-        return ResponseEntity.status(HttpStatus.OK).body(attractionService.findSearch(keyword, sidoCode, gugunCode, contentTypeId));
+                                                                  @RequestParam(required = false, defaultValue="0") int contentTypeId,
+                                            @RequestParam("pageNumber") int pageNumber, @RequestParam("pageSize") int pageSize) {
+        return ResponseEntity.status(HttpStatus.OK).body(attractionService.findSearch(keyword, sidoCode, gugunCode, contentTypeId, pageNumber, pageSize));
     }
 
     @GetMapping("/sido-info")

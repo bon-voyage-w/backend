@@ -34,15 +34,15 @@ public class AttractionServiceImpl implements AttractionService {
     private final SidoRepository sidoRepository;
 
     @Override
-    public Page<AttractionInfoDto> getAttractionList() {
+    public Page<AttractionInfoDto> getAttractionList(int pageNumber, int pageSize) {
 //        [test] paging 처리
-        Pageable page = PageRequest.of(0, 6, Sort.Direction.DESC, "contentId");
+        Pageable page = PageRequest.of(pageNumber, pageSize, Sort.Direction.DESC, "contentId");
         Page<AttractionInfoEntity> entityList = attractionInfoRepository.findAll(page);
         return toDtoList(entityList);
     }
 
     @Override
-    public Page<AttractionInfoDto> findSearch(String keyword, int sidoCode, int gugunCode, int contentTypeId) {
+    public Page<AttractionInfoDto> findSearch(String keyword, int sidoCode, int gugunCode, int contentTypeId, int pageNumber, int pageSize) {
         Long contentCategoryId = new Long(contentTypeId);
 //        1. 조건 생성
 //          1-1. 검색어 존재 여부
@@ -64,7 +64,7 @@ public class AttractionServiceImpl implements AttractionService {
         }
 
 //        2. 조건 적용
-        Pageable page = PageRequest.of(0, 6, Sort.Direction.DESC, "contentId");
+        Pageable page = PageRequest.of(pageNumber, pageSize, Sort.Direction.DESC, "contentId");
         Page<AttractionInfoEntity> entityList = attractionInfoRepository.findAll(spec, page);
         return toDtoList(entityList);
     }

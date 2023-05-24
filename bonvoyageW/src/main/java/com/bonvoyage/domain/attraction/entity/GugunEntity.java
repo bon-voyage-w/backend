@@ -16,8 +16,7 @@ public class GugunEntity {
     private Long gugunCode;
     private String gugunName;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @MapsId
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "sidoCode")
     private SidoEntity sidoEntity;
 

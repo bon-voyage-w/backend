@@ -10,11 +10,11 @@ import java.util.List;
 
 public interface AttractionService {
 
-    Page<AttractionInfoDto> getAttractionList();
+    Page<AttractionInfoDto> getAttractionList(int pageNumber, int pageSize);
     AttractionDetailPageInfoDto findByContentId(Long contentId);
 
 //    List<AttractionInfoDto> findByTitle(String title);
-    Page<AttractionInfoDto> findSearch(String keyword, int sidoCode, int gugunCode, int contentTypeId);
-    List<SidoDto> getSidoList();
-    List<GugunDto> getGugunList(Long sidoCode);
+Page<AttractionInfoDto> findSearch(String keyword, int sidoCode, int gugunCode, int contentTypeId, int pageNumber, int pageSize);
+List<SidoDto> getSidoList();
+List<GugunDto> getGugunList(Long sidoCode);
 }
