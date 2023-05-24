@@ -32,4 +32,5 @@ public interface UserService {
     UserDto findUserByUserId(int userId);
 
     void removeUserRefreshToken(int userId);
+    boolean isAuthorizedAdmin(int userId);
 }

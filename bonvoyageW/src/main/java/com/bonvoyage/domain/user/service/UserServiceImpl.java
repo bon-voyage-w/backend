@@ -179,4 +179,10 @@ public class UserServiceImpl implements UserService {
         userEntity.setRefreshToken(null);
     }
 
+    @Override
+    public boolean isAuthorizedAdmin(int userId) {
+        UserEntity userEntity= userRepository.findById((long)userId).orElseThrow(NoSuchElementException::new);
+        return userEntity.isAuthorization();
+    }
+
 }
