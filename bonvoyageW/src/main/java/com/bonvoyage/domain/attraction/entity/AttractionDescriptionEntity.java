@@ -1,13 +1,12 @@
 package com.bonvoyage.domain.attraction.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Getter
 @Entity
@@ -16,13 +15,18 @@ import javax.persistence.Table;
 public class AttractionDescriptionEntity {
 
     @Id
-    private long contentId;
+    private Long contentId;
     private String homepage;
     private String overview;
     private String telname;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    @MapsId
+    @JoinColumn(name = "contentId")
+    private AttractionInfoEntity attractionInfoEntity;
+
     @Builder
-    public AttractionDescriptionEntity(long contentId, String homepage, String overview, String telname) {
+    public AttractionDescriptionEntity(Long contentId, String homepage, String overview, String telname) {
         this.contentId = contentId;
         this.homepage = homepage;
         this.overview = overview;

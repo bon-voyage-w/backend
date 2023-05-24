@@ -22,10 +22,10 @@ public class Swagger3Config {
     }
 
     @Bean//domain별로 작성하기!
-    public GroupedOpenApi user(){
+    public GroupedOpenApi attraction(){
         return GroupedOpenApi.builder()
-                .group("user")
-                .pathsToMatch("/users/**")
+                .group("attraction")
+                .pathsToMatch("/attractions/**")
                 .packagesToScan("com.bonvoyage.domain")
                 .build();
     }

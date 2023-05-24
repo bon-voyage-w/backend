@@ -1,10 +1,9 @@
 package com.bonvoyage.domain.attraction.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Getter
 @Entity
@@ -13,7 +12,7 @@ import javax.persistence.Table;
 public class AttractionInfoEntity {
 
     @Id
-    private long contentId;
+    private Long contentId;
 
     private int contentTypeId;
     private String title;
@@ -31,7 +30,7 @@ public class AttractionInfoEntity {
     private String mlevel;
 
     @Builder
-    public AttractionInfoEntity(int contentId, int contentTypeId, String title, String addr1, String addr2, String zipcode, String tel, String firstImage, String firstImage2, int readcount, int sidoCode, int gugunCode, double latitude, double longitude, String mlevel) {
+    public AttractionInfoEntity(Long contentId, int contentTypeId, String title, String addr1, String addr2, String zipcode, String tel, String firstImage, String firstImage2, int readcount, int sidoCode, int gugunCode, double latitude, double longitude, String mlevel) {
         this.contentId = contentId;
         this.contentTypeId = contentTypeId;
         this.title = title;
