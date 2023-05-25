@@ -43,10 +43,12 @@ public class AttractionController {
     @Parameter(name = "contentTypeId", description = "관광지 분류 번호")
     @GetMapping("/search")
     public ResponseEntity<?> searchByParams(@RequestParam(required = false) String keyword,
-                                                                  @RequestParam(required = false, defaultValue="0") int sidoCode,
-                                                                  @RequestParam(required = false, defaultValue="0") int gugunCode,
-                                                                  @RequestParam(required = false, defaultValue="0") int contentTypeId,
+                                                                  @RequestParam(required = false) int sidoCode,
+                                                                  @RequestParam(required = false) int gugunCode,
+                                                                  @RequestParam(required = false) int contentTypeId,
                                             @RequestParam("pageNumber") int pageNumber, @RequestParam("pageSize") int pageSize) {
+        System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@ keywowrd @@@@@@@@@@@@@@@@@@@@@@@@@@@" + keyword);
+        System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@ ontentTypeId @@@@@@@@@@@@@@@@@@@@@@@@@@@" + contentTypeId);
         return ResponseEntity.status(HttpStatus.OK).body(attractionService.findSearch(keyword, sidoCode, gugunCode, contentTypeId, pageNumber, pageSize));
     }
 

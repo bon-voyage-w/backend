@@ -35,7 +35,6 @@ public class AttractionServiceImpl implements AttractionService {
 
     @Override
     public Page<AttractionInfoDto> getAttractionList(int pageNumber, int pageSize) {
-//        [test] paging 처리
         Pageable page = PageRequest.of(pageNumber, pageSize, Sort.Direction.DESC, "contentId");
         Page<AttractionInfoEntity> entityList = attractionInfoRepository.findAll(page);
         return toDtoList(entityList);
@@ -43,7 +42,7 @@ public class AttractionServiceImpl implements AttractionService {
 
     @Override
     public Page<AttractionInfoDto> findSearch(String keyword, int sidoCode, int gugunCode, int contentTypeId, int pageNumber, int pageSize) {
-        Long contentCategoryId = new Long(contentTypeId);
+//        Long contentCategoryId = new Long(contentTypeId);
 //        1. 조건 생성
 //          1-1. 검색어 존재 여부
         Specification<AttractionInfoEntity> spec = (root, query, criteriaBuilder) -> null;
@@ -59,8 +58,8 @@ public class AttractionServiceImpl implements AttractionService {
             spec = spec.and(AttractionSpecification.equalGugun(gugunCode));
         }
 //        1-3. 분류
-        if(contentCategoryId != 0) {
-            spec = spec.and(AttractionSpecification.equalContentTypeId(contentCategoryId));
+        if(contentTypeId > 0) {
+            spec = spec.and(AttractionSpecification.equalContentTypeId((long) contentTypeId));
         }
 
 //        2. 조건 적용
@@ -96,7 +95,6 @@ public class AttractionServiceImpl implements AttractionService {
                     .gugunName(gugunEntity.getGugunName())
                     .sidoCode(gugunEntity.getSidoEntity().getSidoCode())
                     .build();
-            System.out.println("@@@@@@@@@@@@@@@@@@@ " + gugunDto.getGugunName());
             result.add(gugunDto);
         }
         return result;
