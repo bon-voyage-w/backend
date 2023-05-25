@@ -53,16 +53,20 @@ public class UserServiceImpl implements UserService {
     }
     @Override
     public int registerUser(UserDto userDto){
+        System.out.println(userDto.toString());
         UserEntity userEntity = UserEntity.builder()
                 .authorization(false)
                 .email(userDto.getEmail())
                 .name(userDto.getName())
                 .profileImg(userDto.getProfileImg())
+                .loginId(userDto.getLoginId())
+                .pw(userDto.getPw())
                 .avail(true)
                 .birth(userDto.getBirth())
-                .ageRange("20~29")
+                .ageRange("0~99세")
                 .build();
         UserEntity user=userRepository.save(userEntity);
+        System.out.println("유저 생성 완료");
         return Math.toIntExact(user.getUserId());
     }
     public String updateUserDetail(int userId, UserDto userDto){
@@ -100,7 +104,7 @@ public class UserServiceImpl implements UserService {
         UserEntity userEntity=userRepository.findById((long)userId)
                 .orElseThrow(NoSuchElementException::new);
         userEntity.setRefreshToken(refreshToken);
-
+        System.out.println("토큰 생성 완료");
         return token;
     }
 
@@ -115,7 +119,7 @@ public class UserServiceImpl implements UserService {
                 .email(userEntity.getEmail())
                 .loginId(userEntity.getLoginId())
                 .ageRange(userEntity.getAgeRange())
-                .authorization(userEntity.isAuthorization())
+                .authorization(String.valueOf(userEntity.isAuthorization()))
                 .profileImg(userEntity.getProfileImg())
                 .name(userEntity.getName())
                 .build();
@@ -166,7 +170,7 @@ public class UserServiceImpl implements UserService {
                 .email(userEntity.getEmail())
                 .loginId(userEntity.getLoginId())
                 .ageRange(userEntity.getAgeRange())
-                .authorization(userEntity.isAuthorization())
+                .authorization(String.valueOf(userEntity.isAuthorization()))
                 .profileImg(userEntity.getProfileImg())
                 .name(userEntity.getName())
                 .build();

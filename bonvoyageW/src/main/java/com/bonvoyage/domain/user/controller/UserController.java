@@ -1,6 +1,11 @@
 package com.bonvoyage.domain.user.controller;
 
+import com.bonvoyage.domain.review.dto.ReviewDto;
+import com.bonvoyage.domain.review.service.ReviewService;
+import com.bonvoyage.domain.route.dto.RouteDto;
+import com.bonvoyage.domain.route.service.RouteService;
 import com.bonvoyage.domain.user.dto.UserDto;
+import com.bonvoyage.domain.user.like.service.UserLikeService;
 import com.bonvoyage.domain.user.service.JWTService;
 import com.bonvoyage.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +23,9 @@ public class UserController {
 
     private final UserService userService;
     private final JWTService jwtService;
+    private final ReviewService reviewService;
+    private final UserLikeService userLikeService;
+    private final RouteService routeService;
     @GetMapping("/test")
     public ResponseEntity<?> userList(){
         try {
@@ -44,13 +52,13 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(userDto);
     }
     @PostMapping("")
-    public ResponseEntity<?> userRegister(UserDto userDto){
+    public ResponseEntity<?> userRegister(@RequestBody UserDto userDto){
         int userId= userService.registerUser(userDto);
-        Map<String,String> token=userService.setTokenInfo(userId);
-        return ResponseEntity.status(HttpStatus.CREATED).body(token);
+        return ResponseEntity.status(HttpStatus.CREATED).body(null);
     }
     @PutMapping
-    public ResponseEntity<?> userModify(@RequestHeader("Authorization") String accessToken,UserDto userDto){
+    public ResponseEntity<?> userModify(@RequestHeader("Authorization") String accessToken,
+                                        @RequestBody UserDto userDto){
         if(jwtService.isUnavailToken(accessToken)){
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("인증되지 않은 사용자입니다");
         }
@@ -102,25 +110,57 @@ public class UserController {
 
 
     @GetMapping("/like")
-    public ResponseEntity<?> userLikeList(){
+    public ResponseEntity<?> userLikeList(@RequestHeader("Authorization") String accessToken){
+        if(jwtService.isUnavailToken(accessToken)){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("인증되지 않은 사용자입니다");
+        }
+        int userId=jwtService.getUserId(accessToken);
 
-        return ResponseEntity.status(HttpStatus.OK).body(null);
+        return ResponseEntity.status(HttpStatus.OK).body(userLikeService.findUserLikeAttraction(userId));
     }
     @PostMapping("/like/{id}")
-    public ResponseEntity<?> userLikeRegister(@PathVariable(value = "id") int likeId){
+    public ResponseEntity<?> userLikeRegister(@RequestHeader("Authorization") String accessToken,
+                                              @PathVariable(value = "id") int contentId){
+        if(jwtService.isUnavailToken(accessToken)){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("인증되지 않은 사용자입니다");
+        }
+        int userId=jwtService.getUserId(accessToken);
+        userLikeService.addUserLike(userId,contentId);
         return ResponseEntity.status(HttpStatus.OK).body(null);
     }
     @DeleteMapping("/like/{id}")
-    public ResponseEntity<?> userLikeDelete(@PathVariable(value = "id") int likeId){
+    public ResponseEntity<?> userLikeDelete(@RequestHeader("Authorization") String accessToken,
+                                            @PathVariable(value = "id") int contentId){
+        if(jwtService.isUnavailToken(accessToken)){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("인증되지 않은 사용자입니다");
+        }
+        int userId=jwtService.getUserId(accessToken);
+        userLikeService.deleteUserLike(userId,contentId);
+
         return ResponseEntity.status(HttpStatus.OK).body(null);
     }
     @GetMapping("/reviews")
-    public ResponseEntity<?> userReviewList(){
-        return ResponseEntity.status(HttpStatus.OK).body(null);
+    public ResponseEntity<?> userReviewList(@RequestHeader("Authorization") String accessToken){
+        if(jwtService.isUnavailToken(accessToken)){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("인증되지 않은 사용자입니다");
+        }
+        int userId=jwtService.getUserId(accessToken);
+        List<ReviewDto> reviewDtoList= reviewService.findReviewListByUserId(userId);
+        return ResponseEntity.status(HttpStatus.OK).body(reviewDtoList);
+    }
+    @GetMapping("/routes")
+    public ResponseEntity<?> userRouteList(@RequestHeader("Authorization") String accessToken){
+        if(jwtService.isUnavailToken(accessToken)){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("인증되지 않은 사용자입니다");
+        }
+        int userId=jwtService.getUserId(accessToken);
+        List<RouteDto> routeDtoList= routeService.findRouteListByUserId(userId);
+        return ResponseEntity.status(HttpStatus.OK).body(routeDtoList);
     }
     @GetMapping("/share-boards")
     public ResponseEntity<?> userShareBoardList(){
-        return ResponseEntity.status(HttpStatus.OK).body(null);
+
+        return ResponseEntity.status(HttpStatus.OK).body(userLikeService.findUserLikeAttraction(1));
     }
 
     private ResponseEntity<String> exceptionHandling(Exception e) {

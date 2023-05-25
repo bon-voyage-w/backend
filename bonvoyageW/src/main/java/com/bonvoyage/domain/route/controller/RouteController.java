@@ -32,7 +32,7 @@ public class RouteController {
     @PostMapping
     public ResponseEntity<?> routeAdd(@RequestHeader("Authorization") String accessToken,
                                       @RequestBody RouteDto routeDto){
-        if(jwtService.checkToken(accessToken)){
+        if(jwtService.isUnavailToken(accessToken)){
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("인증되지 않은 사용자입니다");
         }
         int userId=jwtService.getUserId(accessToken);
@@ -42,7 +42,7 @@ public class RouteController {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> routeDelete(@RequestHeader("Authorization") String accessToken,
                                          @PathVariable("id") int routeId){
-        if(jwtService.checkToken(accessToken)){
+        if(jwtService.isUnavailToken(accessToken)){
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("인증되지 않은 사용자입니다");
         }
         int userId=jwtService.getUserId(accessToken);
@@ -57,7 +57,7 @@ public class RouteController {
     public ResponseEntity<?> routeModify(@RequestHeader("Authorization") String accessToken,
                                          @PathVariable("id") int routeId,
                                          @RequestBody RouteDto routeDto){
-        if(jwtService.checkToken(accessToken)){
+        if(jwtService.isUnavailToken(accessToken)){
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("인증되지 않은 사용자입니다");
         }
         int userId=jwtService.getUserId(accessToken);
@@ -71,7 +71,7 @@ public class RouteController {
     @GetMapping("/{id}")
     public ResponseEntity<?> routeDetail(@RequestHeader("Authorization") String accessToken,
                                          @PathVariable("id") int routeId){
-        if(jwtService.checkToken(accessToken)){
+        if(jwtService.isUnavailToken(accessToken)){
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("인증되지 않은 사용자입니다");
         }
         int userId=jwtService.getUserId(accessToken);
