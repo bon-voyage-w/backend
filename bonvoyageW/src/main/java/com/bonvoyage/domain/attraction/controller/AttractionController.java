@@ -27,7 +27,7 @@ public class AttractionController {
     @Operation(summary = "findByContentId", description = "관광지 정보 상세보기")
     @Parameter(name = "contentId", description = "관광지 고유 번호")
     @GetMapping("/{contentId}")
-    public ResponseEntity<AttractionDetailPageInfoDto> findByContentId(@PathVariable("contentId") Long contentId) {
+    public ResponseEntity<?> findByContentId(@PathVariable("contentId") Long contentId) {
         return ResponseEntity.status(HttpStatus.OK).body(attractionService.findAttractionDetailByContentId(contentId));
     }
 
@@ -42,8 +42,6 @@ public class AttractionController {
                                                                   @RequestParam(required = false) int gugunCode,
                                                                   @RequestParam(required = false) int contentTypeId,
                                             @RequestParam("pageNumber") int pageNumber, @RequestParam("pageSize") int pageSize) {
-        System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@ keywowrd @@@@@@@@@@@@@@@@@@@@@@@@@@@" + keyword);
-        System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@ ontentTypeId @@@@@@@@@@@@@@@@@@@@@@@@@@@" + contentTypeId);
         return ResponseEntity.status(HttpStatus.OK).body(attractionService.findSearch(keyword, sidoCode, gugunCode, contentTypeId, pageNumber, pageSize));
     }
 

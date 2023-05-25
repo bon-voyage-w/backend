@@ -21,13 +21,13 @@ public class ReviewServiceImpl implements ReviewService {
     private final UserService userService;
 
     @Override
-    public Long addReview(ReviewDto reviewDto) {
+    public Long addReview(int userId,ReviewDto reviewDto) {
         reviewRepository.save(dtoToEntity(reviewDto));
         return reviewDto.getReviewId();
     }
 
     @Override
-    public Long modifyReview(Long reviewId, ReviewDto reviewDto) {
+    public Long modifyReview(int userId,Long reviewId, ReviewDto reviewDto) {
         ReviewEntity reviewEntity = reviewRepository.findById(reviewId)
                 .orElseThrow(NullPointerException::new);
         reviewEntity.update(reviewDto.getReviewContent());
@@ -35,7 +35,7 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public Long removeReview(Long reviewId) {
+    public Long removeReview(int userId,Long reviewId) {
         reviewRepository.deleteById(reviewId);
         return reviewId;
     }

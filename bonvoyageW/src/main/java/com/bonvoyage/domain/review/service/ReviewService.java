@@ -6,9 +6,9 @@ import java.util.List;
 
 public interface ReviewService {
 
-    Long addReview(ReviewDto reviewDto);
-    Long modifyReview(Long reviewId, ReviewDto reviewDto);
-    Long removeReview(Long reviewId);
+    Long addReview(int userId,ReviewDto reviewDto);
+    Long modifyReview(int userId,Long reviewId, ReviewDto reviewDto);
+    Long removeReview(int userId,Long reviewId);
 
     List<ReviewDto> getReviewList(Long contentId);
     List<ReviewDto> findReviewListByLoginId(String loginId);
