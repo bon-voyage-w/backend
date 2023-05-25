@@ -41,15 +41,18 @@ public class NoticeServiceImpl implements NoticeService {
     }
 
     @Override
-    public void modifyNotice(Long noticeId, NoticeDto noticeDto) {
+    public Long modifyNotice(Long noticeId, NoticeDto noticeDto) {
         NoticeEntity noticeEntity = noticeRepository.findById(noticeId)
                 .orElseThrow(NullPointerException::new);
         noticeEntity.update(noticeDto.getTitle(), noticeDto.getContent());
+        return noticeId;
+
     }
 
     @Override
-    public void removeNotice(Long noticeId) {
+    public Long removeNotice(Long noticeId) {
         noticeRepository.deleteById(noticeId);
+        return noticeId;
     }
 
     private Page<NoticeDto> pageEntityListToPageDtoList(Page<NoticeEntity> noticePageNoticeEntity) {

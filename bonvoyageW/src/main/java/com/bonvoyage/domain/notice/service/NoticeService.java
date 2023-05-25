@@ -10,6 +10,6 @@ public interface NoticeService {
     Page<NoticeDto> getNoticeList(int pageNumber, int pageSize);
     NoticeDto findByNoticeId(Long noticeId);
     Long addNotice(NoticeDto noticeDto);
-    void modifyNotice(Long noticeId, NoticeDto noticeDto);
-    void removeNotice(Long noticeId);
+    Long modifyNotice(Long noticeId, NoticeDto noticeDto);
+    Long removeNotice(Long noticeId);
 }
