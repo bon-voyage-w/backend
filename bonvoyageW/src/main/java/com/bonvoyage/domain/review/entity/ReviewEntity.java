@@ -4,6 +4,8 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -19,6 +21,7 @@ public class ReviewEntity {
     private Long reviewId;
 
     private String reviewContent;
+    @CreatedDate
     private Date writeDate;
     private String location;
     private int userId;
