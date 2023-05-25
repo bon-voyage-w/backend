@@ -27,7 +27,7 @@ public class AttractionController {
     @Operation(summary = "findByContentId", description = "관광지 정보 상세보기")
     @Parameter(name = "contentId", description = "관광지 고유 번호")
     @GetMapping("/{contentId}")
-    public ResponseEntity<AttractionDetailPageInfoDto> findByContentId(@PathVariable("contentId") Long contentId) {
+    public ResponseEntity<?> findByContentId(@PathVariable("contentId") Long contentId) {
         return ResponseEntity.status(HttpStatus.OK).body(attractionService.findAttractionByContentId(contentId));
     }
 
