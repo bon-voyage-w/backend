@@ -63,7 +63,7 @@ public class UserServiceImpl implements UserService {
                 .pw(userDto.getPw())
                 .avail(true)
                 .birth(userDto.getBirth())
-                .ageRange("20~29")
+                .ageRange("0~99세")
                 .build();
         UserEntity user=userRepository.save(userEntity);
         System.out.println("유저 생성 완료");
