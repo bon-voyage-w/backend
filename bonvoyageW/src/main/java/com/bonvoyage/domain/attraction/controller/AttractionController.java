@@ -1,19 +1,14 @@
 package com.bonvoyage.domain.attraction.controller;
 
 import com.bonvoyage.domain.attraction.dto.AttractionDetailPageInfoDto;
-import com.bonvoyage.domain.attraction.dto.AttractionInfoDto;
 import com.bonvoyage.domain.attraction.service.AttractionService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @Tag(name = "Attraction Controller", description = "관광지 정보 컨트롤러")
 @RestController
@@ -33,7 +28,7 @@ public class AttractionController {
     @Parameter(name = "contentId", description = "관광지 고유 번호")
     @GetMapping("/{contentId}")
     public ResponseEntity<AttractionDetailPageInfoDto> findByContentId(@PathVariable("contentId") Long contentId) {
-        return ResponseEntity.status(HttpStatus.OK).body(attractionService.findByContentId(contentId));
+        return ResponseEntity.status(HttpStatus.OK).body(attractionService.findAttractionByContentId(contentId));
     }
 
     @Operation(summary = "searchByParams", description = "여러 검색어를 적용하여 관광지 리스트 가져오기 : 검색어, 시도, 구군, 관광지 종류")

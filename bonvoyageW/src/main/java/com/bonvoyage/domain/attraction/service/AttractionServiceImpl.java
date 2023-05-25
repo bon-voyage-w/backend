@@ -23,6 +23,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 @RequiredArgsConstructor
@@ -103,7 +104,7 @@ public class AttractionServiceImpl implements AttractionService {
     }
 
     @Override
-    public AttractionDetailPageInfoDto findByContentId(Long contentId) {
+    public AttractionDetailPageInfoDto findAttractionDetailByContentId(Long contentId) {
         AttractionDescriptionEntity attractionDescriptionEntity = attractionDescriptionRepository.findByContentId(contentId);
 
         AttractionDetailPageInfoDto attractionDetailPageInfoDto = AttractionDetailPageInfoDto.builder()
@@ -113,7 +114,11 @@ public class AttractionServiceImpl implements AttractionService {
 
         return attractionDetailPageInfoDto;
     }
-
+    public AttractionInfoDto findAttractionByContentId(Long contentId) {
+        AttractionInfoEntity attractionInfoEntity = attractionInfoRepository.findById(contentId).orElseThrow(NoSuchElementException::new);
+        AttractionInfoDto attractionInfoDto=entityToDto(attractionInfoEntity);
+        return attractionInfoDto;
+    }
     public Page<AttractionInfoDto> toDtoList(Page<AttractionInfoEntity> attractionInfoEntityList) {
         Page<AttractionInfoDto> attractionInfoDtoList = attractionInfoEntityList.map(attractionInfoEntity -> AttractionInfoDto.builder()
                 .contentId(attractionInfoEntity.getContentId())

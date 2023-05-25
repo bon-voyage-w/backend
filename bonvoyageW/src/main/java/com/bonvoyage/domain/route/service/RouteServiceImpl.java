@@ -129,7 +129,7 @@ public class RouteServiceImpl implements RouteService {
         for(int daySeq=1;daySeq<= totalDays;daySeq++){
             int cntVisitAttraction=attractionInfoDtoListForDaySeq[daySeq-1].size();
             for(int i=0;i<cntVisitAttraction;i++){
-                AttractionInfoDto attractionInfoDto=attractionService.findByContentId((long)routeDetailEntityListForDaySeq[daySeq-1].get(i).getRouteContent());
+                AttractionInfoDto attractionInfoDto=attractionService.findAttractionByContentId((long)routeDetailEntityListForDaySeq[daySeq-1].get(i).getRouteContent());
                 attractionInfoDtoListForDaySeq[daySeq-1].add(attractionInfoDto);
             }
         }
