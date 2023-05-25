@@ -52,13 +52,13 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(userDto);
     }
     @PostMapping("")
-    public ResponseEntity<?> userRegister(UserDto userDto){
+    public ResponseEntity<?> userRegister(@RequestBody UserDto userDto){
         int userId= userService.registerUser(userDto);
-        Map<String,String> token=userService.setTokenInfo(userId);
-        return ResponseEntity.status(HttpStatus.CREATED).body(token);
+        return ResponseEntity.status(HttpStatus.CREATED).body(null);
     }
     @PutMapping
-    public ResponseEntity<?> userModify(@RequestHeader("Authorization") String accessToken,UserDto userDto){
+    public ResponseEntity<?> userModify(@RequestHeader("Authorization") String accessToken,
+                                        @RequestBody UserDto userDto){
         if(jwtService.isUnavailToken(accessToken)){
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("인증되지 않은 사용자입니다");
         }
